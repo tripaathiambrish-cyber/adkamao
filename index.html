@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>AdsDekho PaiseKamao - Real Cash Rewards</title>
-    <script src="https://pl29653945.effectivecpmnetwork.com/46/85/fa/4685fafb5472ddac3cd72b2b389c7bc4.js"></script>
     
     <style>
         :root {
@@ -36,7 +35,6 @@
             overflow-x: hidden;
         }
 
-        /* App Header */
         header {
             background: rgba(19, 15, 38, 0.85);
             backdrop-filter: blur(12px);
@@ -76,7 +74,6 @@
             box-shadow: 0 0 15px rgba(0, 255, 102, 0.08);
         }
 
-        /* App Container */
         .app-container {
             padding: 20px;
             max-width: 480px;
@@ -91,7 +88,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Premium Cards */
         .premium-card {
             background: var(--card-bg);
             border: 1px solid var(--card-border);
@@ -105,7 +101,6 @@
         .premium-card h2 { font-size: 20px; font-weight: 700; margin-bottom: 6px; }
         .premium-card p { color: var(--text-muted); font-size: 14px; line-height: 1.4; }
 
-        /* Buttons */
         .app-btn {
             background: linear-gradient(135deg, #9d4edd 0%, #6a0dad 100%);
             color: white;
@@ -129,7 +124,6 @@
             font-weight: 700;
         }
 
-        /* Coming Soon Sections */
         .coming-soon-card { background: rgba(255, 255, 255, 0.01); border-left: 4px solid var(--text-muted); opacity: 0.55; }
         .premium-badge {
             background: rgba(255, 255, 255, 0.08);
@@ -143,7 +137,6 @@
             text-transform: uppercase;
         }
 
-        /* Gift Card Grid Layout */
         .giftcard-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 15px 0; }
         .giftcard-option {
             background: rgba(255, 255, 255, 0.03);
@@ -169,7 +162,6 @@
         .dynamic-form-panel { margin-top: 20px; background: rgba(0, 0, 0, 0.2); padding: 16px; border-radius: 14px; border: 1px solid var(--card-border); }
         .form-title-badge { font-size: 13px; font-weight: 700; margin-bottom: 15px; display: flex; align-items: center; gap: 8px; }
 
-        /* Forms inputs */
         .form-group { text-align: left; margin-bottom: 16px; }
         .form-group label { display: block; margin-bottom: 6px; font-size: 13px; color: var(--text-muted); }
         .form-group input {
@@ -177,7 +169,6 @@
             border: 1px solid var(--card-border); border-radius: 12px; font-size: 15px; color: white;
         }
 
-        /* Bottom Fixed Navigation Bar */
         .bottom-nav {
             position: fixed; bottom: 0; left: 0; right: 0;
             background: rgba(9, 7, 15, 0.92); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
@@ -188,49 +179,47 @@
         .nav-icon { font-size: 22px; margin-bottom: 3px; }
         .nav-item.active { color: var(--accent-green); }
 
-        /* Ad Frame Holders inside app */
-        .ad-holder { background: rgba(0, 0, 0, 0.25); border: 1px dashed var(--card-border); border-radius: 14px; padding: 12px; margin: 20px 0; display: flex; flex-direction: column; align-items: center; gap: 10px; min-height: 80px; }
-        .ad-label { font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
-
-        /* INTERSTITIAL AD OVERLAY POPUP LAYER */
+        /* IN-APP AD MODAL OVERLAY POPUP */
         #inapp-ad-modal {
             display: none;
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: #09070f;
+            background: #000000;
             z-index: 99999;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            padding: 20px;
+            justify-content: flex-start;
+            padding-top: 90px;
         }
 
         .ad-modal-header {
             position: absolute; top: 20px; left: 20px; right: 20px;
             display: flex; justify-content: space-between; align-items: center;
+            z-index: 100000;
         }
 
         .ad-timer-badge {
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid var(--card-border);
-            padding: 8px 16px; border-radius: 30px;
-            font-size: 14px; font-weight: 700; color: #ff3b30;
+            background: rgba(255, 0, 0, 0.15);
+            border: 1px solid #ff3b30;
+            padding: 10px 20px; border-radius: 30px;
+            font-size: 15px; font-weight: 700; color: #ff5252;
         }
 
         .ad-close-btn {
             display: none;
             background: var(--accent-green); color: #09070f;
-            border: none; padding: 8px 18px; border-radius: 20px;
-            font-size: 14px; font-weight: 800; cursor: pointer;
+            border: none; padding: 10px 22px; border-radius: 25px;
+            font-size: 15px; font-weight: 800; cursor: pointer;
+            box-shadow: 0 0 15px var(--accent-green);
         }
 
-        .ad-iframe-body {
-            width: 100%; max-width: 360px; height: 320px;
-            background: rgba(255, 255, 255, 0.02);
+        .ad-viewport-body {
+            width: 92%; height: calc(100vh - 180px);
+            background: #0b0813;
             border: 1px solid var(--card-border);
-            border-radius: 16px;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            border-radius: 20px;
+            display: block;
+            overflow: hidden;
         }
     </style>
 </head>
@@ -248,19 +237,11 @@
         <div id="home" class="section active">
             <div class="premium-card" style="background: linear-gradient(45deg, rgba(157,77,221,0.12), rgba(0,255,102,0.03));">
                 <h2>Welcome Back! 👋</h2>
-                <p>AdsDekho KaiseKamao par task poore kijiye aur safe cash withdraw kijiye.</p>
+                <p>Tasks poore kijiye aur apna wallet balance instant badhaiye.</p>
             </div>
 
             <div class="premium-card coming-soon-card">
                 <h3>Lucky Spin Wheel 🎡</h3>
-                <span class="premium-badge">Coming Soon</span>
-            </div>
-            <div class="premium-card coming-soon-card">
-                <h3>Gk Quiz</h3>
-                <span class="premium-badge">Coming Soon</span>
-            </div>
-            <div class="premium-card coming-soon-card">
-                <h3>Math Quiz</h3>
                 <span class="premium-badge">Coming Soon</span>
             </div>
         </div>
@@ -268,16 +249,8 @@
         <div id="view-ads" class="section">
             <div class="premium-card">
                 <h2>Watch Premium Ads</h2>
-                <p style="margin-bottom: 12px;">Neeche diye gaye button par click karein. Ads isi screen par open hongi, 30s poora dekhein.</p>
+                <p style="margin-bottom: 12px;">Neeche button par click karein, video popup layout load hoga aur 30s ka timer shuru ho jayega.</p>
                 <button class="app-btn secondary" onclick="openInAppAdEngine()">Watch Video Ad (+ ₹0.50)</button>
-            </div>
-
-            <div class="ad-holder">
-                <span class="ad-label">Sponsored Banner 1</span>
-                <script>
-                    atOptions = { 'key' : 'b92a026cc433822f579cfe7965286307', 'format' : 'iframe', 'height' : 60, 'width' : 468, 'params' : {} };
-                </script>
-                <script src="https://www.highperformanceformat.com/b92a026cc433822f579cfe7965286307/invoke.js"></script>
             </div>
         </div>
 
@@ -324,10 +297,8 @@
             <div class="ad-timer-badge" id="ad-timer-text">⏳ 30s Remaining</div>
             <button class="ad-close-btn" id="ad-close-action" onclick="closeInAppAdEngine()">❌ Close Ad</button>
         </div>
-        <div style="margin-bottom: 20px; text-align: center;">
-            <p style="font-size: 14px; color: var(--text-muted);">Premium Sponsored Ad Stream</p>
-        </div>
-        <div class="ad-iframe-body" id="ad-sandbox-viewport"></div>
+        
+        <iframe class="ad-viewport-body" id="ad-target-frame" sandbox="allow-scripts allow-same-origin allow-popups allow-forms"></iframe>
     </div>
 
     <nav class="bottom-nav">
@@ -361,6 +332,7 @@
             selectedBrandName = fullTitle;
         }
 
+        // FULL SCREEN SMART LINK AD TRIGGER
         function openInAppAdEngine() {
             const modal = document.getElementById('inapp-ad-modal');
             modal.style.display = 'flex';
@@ -368,34 +340,11 @@
             document.getElementById('ad-close-action').style.display = 'none';
             document.getElementById('ad-timer-text').style.display = 'block';
             
-            const viewport = document.getElementById('ad-sandbox-viewport');
-            viewport.innerHTML = '';
+            // Sahi Smart Link Code Integration done here!
+            const directSmartLink = "https://www.effectivecpmnetwork.com/m2ds8022zn?key=b7ed26fc3794ac80821ca064a92d5e76"; 
             
-            const frame = document.createElement('iframe');
-            frame.style.width = "160px";
-            frame.style.height = "300px";
-            frame.style.border = "none";
-            viewport.appendChild(frame);
-            
-            const frameDoc = frame.contentWindow.document;
-            frameDoc.open();
-            frameDoc.write(`
-                <html>
-                <body style="margin:0; padding:0; display:flex; justify-content:center; align-items:center; background: transparent;">
-                    <script>
-                        atOptions = {
-                            'key' : 'df54788aa24c0780ac4cda38795bd285',
-                            'format' : 'iframe',
-                            'height' : 300,
-                            'width' : 160,
-                            'params' : {}
-                        };
-                    <\/script>
-                    <script src="https://www.highperformanceformat.com/df54788aa24c0780ac4cda38795bd285/invoke.js"><\/script>
-                </body>
-                </html>
-            `);
-            frameDoc.close();
+            const frame = document.getElementById('ad-target-frame');
+            frame.src = directSmartLink;
 
             let timeLeft = 30;
             document.getElementById('ad-timer-text').innerText = `⏳ ${timeLeft}s Remaining`;
@@ -415,14 +364,13 @@
 
         function closeInAppAdEngine() {
             document.getElementById('inapp-ad-modal').style.display = 'none';
-            document.getElementById('ad-sandbox-viewport').innerHTML = '';
+            document.getElementById('ad-target-frame').src = "about:blank"; 
             
             walletBalance += 0.50;
             updateUIBalance();
             alert("✨ Mubarak ho! Aapne ad ko poora 30s dekha. ₹0.50 aapke wallet me safe credit ho chuke hain.");
         }
 
-        // UPDATED REDEEM SUCCESS ACTION TEXT LISTENER
         function handleGiftCardRedeem(event) {
             event.preventDefault();
             const emailField = document.getElementById('user-email').value;
@@ -437,13 +385,11 @@
                 return; 
             }
 
-            // Deduct balance logic
             walletBalance -= amountField;
             updateUIBalance();
             
-            // Strictly requested layout response trigger
+            // STRICT REQUESTED SUCCESS ALERT
             alert("your ballance redeem successfully please check your email id");
-            
             document.getElementById('payout-form').reset();
         }
     </script>
