@@ -98,7 +98,7 @@
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.25);
         }
 
-        .premium-card h2 { font-size: 20px; font-weight: 700; margin-bottom: 6px; }
+        .premium-card h2, .premium-card h3 { font-size: 20px; font-weight: 700; margin-bottom: 6px; }
         .premium-card p { color: var(--text-muted); font-size: 14px; line-height: 1.4; }
 
         .app-btn {
@@ -124,6 +124,7 @@
             font-weight: 700;
         }
 
+        /* Coming Soon Utility Styling */
         .coming-soon-card { background: rgba(255, 255, 255, 0.01); border-left: 4px solid var(--text-muted); opacity: 0.55; }
         .premium-badge {
             background: rgba(255, 255, 255, 0.08);
@@ -244,6 +245,16 @@
                 <h3>Lucky Spin Wheel 🎡</h3>
                 <span class="premium-badge">Coming Soon</span>
             </div>
+
+            <div class="premium-card coming-soon-card">
+                <h3>Gk Quiz 🧠</h3>
+                <span class="premium-badge">Coming Soon</span>
+            </div>
+
+            <div class="premium-card coming-soon-card">
+                <h3>Math Quiz ➗</h3>
+                <span class="premium-badge">Coming Soon</span>
+            </div>
         </div>
 
         <div id="view-ads" class="section">
@@ -332,7 +343,6 @@
             selectedBrandName = fullTitle;
         }
 
-        // FULL SCREEN SMART LINK AD TRIGGER
         function openInAppAdEngine() {
             const modal = document.getElementById('inapp-ad-modal');
             modal.style.display = 'flex';
@@ -340,7 +350,6 @@
             document.getElementById('ad-close-action').style.display = 'none';
             document.getElementById('ad-timer-text').style.display = 'block';
             
-            // Sahi Smart Link Code Integration done here!
             const directSmartLink = "https://www.effectivecpmnetwork.com/m2ds8022zn?key=b7ed26fc3794ac80821ca064a92d5e76"; 
             
             const frame = document.getElementById('ad-target-frame');
@@ -388,7 +397,6 @@
             walletBalance -= amountField;
             updateUIBalance();
             
-            // STRICT REQUESTED SUCCESS ALERT
             alert("your ballance redeem successfully please check your email id");
             document.getElementById('payout-form').reset();
         }
