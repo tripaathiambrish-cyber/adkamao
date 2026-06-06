@@ -1,131 +1,516 @@
-
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AdKamao</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <style>
-    * { margin:0; padding:0; box-sizing:border-box; }
-    body { font-family: Arial, sans-serif; background:#f0f2f5; }
-    .splash { position:fixed; top:0; left:0; width:100%; height:100vh; background:linear-gradient(135deg,#4CAF50,#2E8B57); color:white; display:flex; align-items:center; justify-content:center; flex-direction:column; z-index:9999; }
-    .app { max-width:480px; margin:0 auto; height:100vh; background:white; box-shadow:0 0 20px rgba(0,0,0,0.1); display:flex; flex-direction:column; }
-    header { background:linear-gradient(135deg,#4CAF50,#2E8B57); color:white; padding:15px 20px; display:flex; justify-content:space-between; align-items:center; }
-    .balance-header { font-size:24px; font-weight:bold; background:rgba(255,255,255,0.3); padding:8px 18px; border-radius:30px; }
-    .feature-card { background:white; padding:22px; margin:12px; border-radius:16px; text-align:center; box-shadow:0 4px 15px rgba(0,0,0,0.1); cursor:pointer; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>AdsDekho PaiseKamao - Real Cash Rewards</title>
+    <!-- Ad Network Script 1 -->
+    <script src="https://pl29653945.effectivecpmnetwork.com/46/85/fa/4685fafb5472ddac3cd72b2b389c7bc4.js"></script>
+    
+    <style>
+        :root {
+            --bg-gradient: linear-gradient(135deg, #09070f 0%, #130f26 100%);
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --card-border: rgba(255, 255, 255, 0.09);
+            --accent-green: #00ff66;
+            --accent-purple: #9d4edd;
+            --text-main: #ffffff;
+            --text-muted: #94a3b8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background: var(--bg-gradient);
+            color: var(--text-main);
+            min-height: 100vh;
+            padding-bottom: 90px;
+            overflow-x: hidden;
+        }
+
+        /* App Header */
+        header {
+            background: rgba(19, 15, 38, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 16px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--card-border);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 20px;
+            font-weight: 900;
+            background: linear-gradient(45deg, #00ff66, #00e5ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.5px;
+        }
+
+        .logo span {
+            color: #ffffff;
+            -webkit-text-fill-color: #ffffff;
+            font-weight: 400;
+        }
+
+        .wallet-box {
+            background: rgba(0, 255, 102, 0.12);
+            border: 1px solid rgba(0, 255, 102, 0.25);
+            color: var(--accent-green);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 0 15px rgba(0, 255, 102, 0.08);
+        }
+
+        /* App Container */
+        .app-container {
+            padding: 20px;
+            max-width: 480px;
+            margin: 0 auto;
+        }
+
+        .section {
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+            animation: appSlideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes appSlideUp {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Premium Cards */
+        .premium-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            backdrop-filter: blur(10px);
+            border-radius: 22px;
+            padding: 20px;
+            margin-bottom: 20px;
+            position: relative;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.25);
+        }
+
+        .premium-card h2 {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .premium-card p {
+            color: var(--text-muted);
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        /* App Buttons */
+        .app-btn {
+            background: linear-gradient(135deg, #9d4edd 0%, #6a0dad 100%);
+            color: white;
+            border: none;
+            padding: 14px 20px;
+            font-size: 15px;
+            font-weight: 600;
+            border-radius: 14px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 15px;
+            box-shadow: 0 4px 15px rgba(157, 77, 221, 0.25);
+            transition: all 0.2s ease;
+        }
+
+        .app-btn:active {
+            transform: scale(0.97);
+        }
+
+        .app-btn.secondary {
+            background: linear-gradient(135deg, #00ff66 0%, #00b0ff 100%);
+            box-shadow: 0 4px 15px rgba(0, 255, 102, 0.15);
+            color: #09070f;
+            font-weight: 700;
+        }
+
+        /* Interactive Spin Wheel UI */
+        .wheel-wrapper {
+            position: relative;
+            width: 160px;
+            height: 160px;
+            margin: 18px auto;
+        }
+
+        .spin-wheel {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 4px solid rgba(255,255,255,0.15);
+            background: conic-gradient(
+                #9d4edd 0deg 72deg, 
+                #00e5ff 72deg 144deg, 
+                #00ff66 144deg 216deg, 
+                #ff3d00 216deg 288deg,
+                #ffea00 288deg 360deg
+            );
+            transition: transform 3s cubic-bezier(0.1, 0.8, 0.1, 1);
+        }
+
+        .wheel-pointer {
+            position: absolute;
+            top: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 18px solid #ffffff;
+            z-index: 10;
+        }
+
+        /* Coming Soon Sections */
+        .coming-soon-card {
+            background: rgba(255, 255, 255, 0.01);
+            border-left: 4px solid var(--text-muted);
+            opacity: 0.55;
+        }
+
+        .premium-badge {
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--text-muted);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            display: inline-block;
+            margin-top: 8px;
+            text-transform: uppercase;
+        }
+
+        /* Input Fields */
+        .form-group {
+            text-align: left;
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 14px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            font-size: 15px;
+            color: white;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--accent-purple);
+        }
+
+        /* Bottom Tab Navigation Bar */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(9, 7, 15, 0.92);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            display: flex;
+            justify-content: space-around;
+            border-top: 1px solid var(--card-border);
+            padding: 12px 0 calc(10px + env(safe-area-inset-bottom));
+            z-index: 1000;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        .nav-icon {
+            font-size: 22px;
+            margin-bottom: 3px;
+        }
+
+        .nav-item.active {
+            color: var(--accent-green);
+        }
+
+        /* Ads Grid Holders */
+        .ad-holder {
+            background: rgba(0, 0, 0, 0.25);
+            border: 1px dashed var(--card-border);
+            border-radius: 14px;
+            padding: 12px;
+            margin: 20px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .ad-label {
+            font-size: 10px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+    </style>
 </head>
 <body>
 
-  <div id="splash" class="splash">
-    <h1>AdKamao</h1>
-    <p>Ads Dekho, Paise Kamao</p>
-  </div>
-
-  <div id="app" class="app" style="display:none;">
+    <!-- Top App Branded Header -->
     <header>
-      <h1>AdKamao</h1>
-      <div class="balance-header">₹<span id="headerBalance">0</span></div>
+        <div class="logo">AdsDekho <span>PaiseKamao</span></div>
+        <div class="wallet-box">
+            <span>🪙</span>₹<span id="balance">0.00</span>
+        </div>
     </header>
 
-    <div id="mainContent" style="flex:1; padding:15px; overflow-y:auto;"></div>
+    <div class="app-container">
 
-    <!-- Bottom Navigation -->
-    <div style="display:flex; justify-content:space-around; background:white; border-top:1px solid #ddd; padding:12px 0; position:fixed; bottom:0; width:100%; max-width:480px;">
-      <div onclick="showPage(0)" style="text-align:center;color:#4CAF50;"><i class="fas fa-home" style="font-size:24px;"></i><br>Home</div>
-      <div onclick="showPage(1)" style="text-align:center;color:#666;"><i class="fas fa-play-circle" style="font-size:24px;"></i><br>Watch Ads</div>
-      <div onclick="showPage(2)" style="text-align:center;color:#666;"><i class="fas fa-gift" style="font-size:24px;"></i><br>Redeem</div>
+        <!-- TAB 1: HOME SECTION -->
+        <div id="home" class="section active">
+            <div class="premium-card" style="background: linear-gradient(45deg, rgba(157,77,221,0.12), rgba(0,255,102,0.03));">
+                <h2>Welcome Back! 👋</h2>
+                <p>AdsDekho PaiseKamao par aapka swagat hai. Daily tasks poore kijiye aur apna wallet balance badhaiye.</p>
+            </div>
+
+            <!-- Lucky Fortune Spin Wheel -->
+            <div class="premium-card">
+                <h3>Lucky Spin Wheel 🎡</h3>
+                <p>Rozana wheel ghumayein aur dheron cash prizes jeetein.</p>
+                <div class="wheel-wrapper">
+                    <div class="wheel-pointer"></div>
+                    <div id="wheel" class="spin-wheel"></div>
+                </div>
+                <button class="app-btn" id="spin-button" onclick="startBrandedSpin()">Spin Now</button>
+            </div>
+
+            <!-- Quiz 1 (Coming Soon) -->
+            <div class="premium-card coming-soon-card">
+                <h3>Gk Quiz</h3>
+                <p>General Knowledge sawalon ke sahi jawab dekar paise kamayein.</p>
+                <span class="premium-badge">Coming Soon</span>
+            </div>
+
+            <!-- Quiz 2 (Coming Soon) -->
+            <div class="premium-card coming-soon-card">
+                <h3>Math Quiz</h3>
+                <p>Aasan maths equations solve karein aur point score badhaiye.</p>
+                <span class="premium-badge">Coming Soon</span>
+            </div>
+        </div>
+
+        <!-- TAB 2: VIEW ADS SECTION -->
+        <div id="view-ads" class="section">
+            <div class="premium-card">
+                <h2>Watch Premium Ads</h2>
+                <p style="margin-bottom: 12px;">Neeche diye gaye button par tap karke premium network streams load karein.</p>
+                <button class="app-btn secondary" onclick="loadAdRewardStream()">Watch Video Ad (+ ₹0.50)</button>
+            </div>
+
+            <!-- Ad Block 1 (468x60) -->
+            <div class="ad-holder">
+                <span class="ad-label">Sponsored Banner 1</span>
+                <script>
+                    atOptions = {
+                        'key' : 'b92a026cc433822f579cfe7965286307',
+                        'format' : 'iframe',
+                        'height' : 60,
+                        'width' : 468,
+                        'params' : {}
+                    };
+                </script>
+                <script src="https://www.highperformanceformat.com/b92a026cc433822f579cfe7965286307/invoke.js"></script>
+            </div>
+
+            <!-- Ad Block 2 (160x300) -->
+            <div class="ad-holder">
+                <span class="ad-label">Sponsored Banner 2</span>
+                <script>
+                    atOptions = {
+                        'key' : 'df54788aa24c0780ac4cda38795bd285',
+                        'format' : 'iframe',
+                        'height' : 300,
+                        'width' : 160,
+                        'params' : {}
+                    };
+                </script>
+                <script src="https://www.highperformanceformat.com/df54788aa24c0780ac4cda38795bd285/invoke.js"></script>
+            </div>
+        </div>
+
+        <!-- TAB 3: REDEEM SECTION -->
+        <div id="redeem" class="section">
+            <div class="premium-card">
+                <h2>Redeem Gift Card 🎁</h2>
+                <p style="margin-bottom: 20px;">Apne kamaye huye paise ko turant apne email ID par transfer kijiye.</p>
+                
+                <div style="background: rgba(255,255,255,0.02); padding: 14px; border-radius: 14px; margin-bottom: 20px; text-align: center; border: 1px solid var(--card-border);">
+                    <span style="font-size: 13px; color: var(--text-muted);">Minimum Withdrawal Amount</span>
+                    <div style="font-size: 24px; font-weight: 800; color: var(--accent-green);">₹10.00</div>
+                </div>
+
+                <form id="payout-form" onsubmit="handleGiftCardRedeem(event)">
+                    <div class="form-group">
+                        <label for="user-email">Enter your Email ID</label>
+                        <input type="email" id="user-email" placeholder="aapkaname@gmail.com" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="payout-amount">Amount (₹)</label>
+                        <input type="number" id="payout-amount" min="10" placeholder="Minimum ₹10" required>
+                    </div>
+
+                    <button type="submit" class="app-btn">Redeem Now</button>
+                </form>
+            </div>
+        </div>
+
     </div>
-  </div>
 
-  <script>
-    let balance = 0;
-    let dailyAdsWatched = 0;
+    <!-- App Bottom Fixed Menu Navigation -->
+    <nav class="bottom-nav">
+        <div class="nav-item active" onclick="switchToTab('home', this)">
+            <span class="nav-icon">🏠</span>
+            <span>Home</span>
+        </div>
+        <div class="nav-item" onclick="switchToTab('view-ads', this)">
+            <span class="nav-icon">📺</span>
+            <span>View Ads</span>
+        </div>
+        <div class="nav-item" onclick="switchToTab('redeem', this)">
+            <span class="nav-icon">🎁</span>
+            <span>Redeem</span>
+        </div>
+    </nav>
 
-    setTimeout(() => {
-      document.getElementById('splash').style.display = 'none';
-      document.getElementById('app').style.display = 'flex';
-      showPage(0);
-    }, 1500);
-
-    function updateBalance() {
-      document.getElementById('headerBalance').innerText = balance;
-    }
-
-    function watchAd() {
-      if (dailyAdsWatched >= 10) return alert("Aaj ke 10 ads khatam!");
-      
-      // Ads open karne ke liye
-      alert("Ad Loading... Please Wait");
-      balance += 1;
-      dailyAdsWatched++;
-      updateBalance();
-      alert(`✅ ₹1 add ho gaya!`);
-    }
-
-    function redeemGift(gift) {
-      if (balance < 10) return alert("Minimum ₹10 chahiye redeem karne ke liye");
-      
-      const email = prompt(`Enter your Email ID for ${gift}\n\nAmount: ₹${balance}\n\nEnter your balance to redeem gift card`);
-      if (email && email.includes("@")) {
-        alert(`✅ ₹${balance} ka ${gift} aapke email ${email} par bhej diya gaya!`);
-        balance = 0;
-        updateBalance();
-      } else {
-        alert("Valid Email ID daaliye");
-      }
-    }
-
-    function comingSoon(name) {
-      alert(name + " jaldi aa raha hai! Stay Tuned 🔥");
-    }
-
-    function showPage(page) {
-      const content = document.getElementById('mainContent');
-      
-      if (page === 0) {
-        content.innerHTML = `
-          <h2 style="text-align:center; margin:25px 0 15px;">More Ways to Earn</h2>
-          <div class="feature-card" onclick="comingSoon('Spin & Earn')">🎰 Spin & Earn <span style="color:#ff9800;">(Coming Soon)</span></div>
-          <div class="feature-card" onclick="comingSoon('Play Quiz')">❓ Play Quiz <span style="color:#ff9800;">(Coming Soon)</span></div>
-          <div class="feature-card" onclick="comingSoon('Math Quiz')">🔢 Math Quiz <span style="color:#ff9800;">(Coming Soon)</span></div>
-        `;
-      } 
-      else if (page === 1) { // Watch Ads
-        content.innerHTML = `
-          <h3 style="text-align:center;margin:20px 0;">Watch Ads & Earn ₹1</h3>
-          <div class="feature-card" onclick="watchAd()">▶ Watch Video Ad<br><strong>+ ₹1</strong></div>
-          <div class="feature-card" onclick="watchAd()">▶ Watch Video Ad<br><strong>+ ₹1</strong></div>
-        `;
-      } 
-      else if (page === 2) { // Redeem
-        content.innerHTML = `
-          <h3 style="text-align:center;margin:25px 0;">Redeem Your Earnings (Min ₹10)</h3>
-          <div class="feature-card" onclick="redeemGift('Play Store Gift Card')">🎮 Play Store Gift Card</div>
-          <div class="feature-card" onclick="redeemGift('Amazon Gift Card')">📦 Amazon Gift Card</div>
-          <div class="feature-card" onclick="redeemGift('Flipkart Gift Card')">🛒 Flipkart Gift Card</div>
-        `;
-      }
-    }
-  </script>
-
-  <!-- ================== Adsterra Ads ================== -->
-  <script src="https://pl29653945.effectivecpmnetwork.com/46/85/fa/4685fafb5472ddac3cd72b2b389c7bc4.js"></script>
-
-  <div style="margin:15px auto; text-align:center;">
+    <!-- App State and Processing Scripts -->
     <script>
-      atOptions = {'key':'b92a026cc433822f579cfe7965286307','format':'iframe','height':60,'width':468,'params':{}};
-    </script>
-    <script src="https://www.highperformanceformat.com/b92a026cc433822f579cfe7965286307/invoke.js"></script>
-  </div>
+        // LocalStorage Sync for Balance Persistence
+        let walletBalance = parseFloat(localStorage.getItem('adsdekho_pk_bal')) || 0.00;
+        updateUIBalance();
 
-  <div style="margin:15px auto; text-align:center;">
-    <script>
-      atOptions = {'key':'df54788aa24c0780ac4cda38795bd285','format':'iframe','height':300,'width':160,'params':{}};
-    </script>
-    <script src="https://www.highperformanceformat.com/df54788aa24c0780ac4cda38795bd285/invoke.js"></script>
-  </div>
+        function updateUIBalance() {
+            document.getElementById('balance').innerText = walletBalance.toFixed(2);
+            localStorage.setItem('adsdekho_pk_bal', walletBalance);
+        }
 
+        // Tab Switching Router
+        function switchToTab(targetSection, menuElement) {
+            document.querySelectorAll('.section').forEach(view => view.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById(targetSection).classList.add('active');
+            menuElement.classList.add('active');
+        }
+
+        // Spin Engine Logic
+        let rotationDegrees = 0;
+        let isSpinning = false;
+
+        function startBrandedSpin() {
+            if (isSpinning) return;
+            
+            isSpinning = true;
+            const actionBtn = document.getElementById('spin-button');
+            actionBtn.disabled = true;
+            actionBtn.innerText = "Spinning...";
+
+            const wheelElement = document.getElementById('wheel');
+            const randomSpin = Math.floor(Math.random() * 360) + 1440; // 4 full rounds minimum
+            rotationDegrees += randomSpin;
+            
+            wheelElement.style.transform = `rotate(${rotationDegrees}deg)`;
+
+            setTimeout(() => {
+                const rewardsPool = [0.20, 0.50, 1.00, 0.00, 0.30];
+                const prize = rewardsPool[Math.floor(Math.random() * rewardsPool.length)];
+                
+                walletBalance += prize;
+                updateUIBalance();
+
+                if (prize > 0) {
+                    alert(`🎉 AdsDekho PaiseKamao Bonus!\n\nAapke wallet me ₹${prize.toFixed(2)} jod diye gaye hain.`);
+                } else {
+                    alert("Oh ho! Agli baar try karein.");
+                }
+
+                actionBtn.disabled = false;
+                actionBtn.innerText = "Spin Now";
+                isSpinning = false;
+            }, 3100);
+        }
+
+        // Fake Ad Loader Video Stream Trigger
+        function loadAdRewardStream() {
+            alert("AdsDekho Platform: Ad load ho raha hai, kripya 3-5 seconds wait karein...");
+            setTimeout(() => {
+                walletBalance += 0.50;
+                updateUIBalance();
+                alert("✨ Badhai ho! Ad dekhne ke liye ₹0.50 aapke wallet me add ho chuke hain.");
+            }, 2500);
+        }
+
+        // Gift Card Redeem Form Processor
+        function handleGiftCardRedeem(event) {
+            event.preventDefault();
+            
+            const emailField = document.getElementById('user-email').value;
+            const amountField = parseFloat(document.getElementById('payout-amount').value);
+
+            if (amountField < 10) {
+                alert("AdsDekho Security: Minimum withdrawal limit ₹10 hai.");
+                return;
+            }
+
+            if (walletBalance < amountField) {
+                alert(`Insufficient Balance! Aapke paas sirf ₹${walletBalance.toFixed(2)} hain.`);
+                return;
+            }
+
+            walletBalance -= amountField;
+            updateUIBalance();
+            
+            alert(`✅ Redeem Request Received!\n\nEmail: ${emailField}\nAmount: ₹${amountField.toFixed(2)}\n\nAdsDekho team 24-48 ghante me aapko Gift Card code email par bhej degi.`);
+            document.getElementById('payout-form').reset();
+        }
+    </script>
 </body>
 </html>
