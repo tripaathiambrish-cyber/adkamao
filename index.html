@@ -4,96 +4,40 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AdKamao</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
-    * { margin:0; padding:0; box-sizing:border-box; }
-    body { font-family: Arial, sans-serif; background:#f0f2f5; }
-    .splash { position:fixed; top:0; left:0; width:100%; height:100vh; background:linear-gradient(135deg,#4CAF50,#2E8B57); color:white; display:flex; align-items:center; justify-content:center; flex-direction:column; z-index:9999; }
-    .app { max-width:480px; margin:0 auto; height:100vh; background:white; box-shadow:0 0 20px rgba(0,0,0,0.1); display:flex; flex-direction:column; }
-    header { background:linear-gradient(135deg,#4CAF50,#2E8B57); color:white; padding:15px 20px; display:flex; justify-content:space-between; align-items:center; }
-    .balance-header { font-size:22px; font-weight:bold; background:rgba(255,255,255,0.25); padding:6px 14px; border-radius:25px; }
-    .feature-card { background:white; padding:20px; margin:12px; border-radius:16px; text-align:center; box-shadow:0 4px 15px rgba(0,0,0,0.1); }
+    body { font-family: Arial; background:#f0f2f5; margin:0; padding:15px; }
+    .card { background:white; padding:25px; margin:15px 0; border-radius:16px; text-align:center; box-shadow:0 4px 15px rgba(0,0,0,0.1); }
   </style>
 </head>
 <body>
 
-  <div id="splash" class="splash">
-    <h1>AdKamao</h1>
-    <p>Ads Dekho, Paise Kamao</p>
+  <h1 style="text-align:center;">AdKamao</h1>
+  <h2 style="text-align:center; color:#4CAF50;">Balance: ₹<span id="bal">0</span></h2>
+
+  <div class="card" onclick="earn(1)">
+    ▶ Watch Video Ad<br>
+    <strong>+ ₹1</strong>
   </div>
 
-  <div id="app" class="app" style="display:none;">
-    <header>
-      <h1>AdKamao</h1>
-      <div class="balance-header">₹<span id="headerBalance">0</span></div>
-    </header>
+  <div class="card" onclick="earn(1)">
+    ▶ Watch Video Ad<br>
+    <strong>+ ₹1</strong>
+  </div>
 
-    <div id="mainContent" style="flex:1; padding:15px; overflow-y:auto;"></div>
-
-    <div style="display:flex; justify-content:space-around; background:white; border-top:1px solid #ddd; padding:12px 0; position:fixed; bottom:0; width:100%; max-width:480px;">
-      <div onclick="showPage(0)" style="text-align:center;color:#4CAF50;"><i class="fas fa-home" style="font-size:24px;"></i><br>Home</div>
-      <div onclick="showPage(1)" style="text-align:center;color:#666;"><i class="fas fa-play-circle" style="font-size:24px;"></i><br>Watch Ads</div>
-      <div onclick="showPage(2)" style="text-align:center;color:#666;"><i class="fas fa-gift" style="font-size:24px;"></i><br>Redeem</div>
-    </div>
+  <!-- Adsterra Ads -->
+  <div style="margin:15px auto; text-align:center;">
+    <script>
+      atOptions = {'key':'c15abd43fb2db8e7a896fc19243f109a','format':'iframe','height':300,'width':160,'params':{}};
+    </script>
+    <script src="https://www.profitabledisplaynetwork.com/c15abd43fb2db8e7a896fc19243f109a/invoke.js"></script>
   </div>
 
   <script>
     let balance = 0;
-    let dailyAdsWatched = 0;
-
-    setTimeout(() => {
-      document.getElementById('splash').style.display = 'none';
-      document.getElementById('app').style.display = 'flex';
-      showPage(0);
-    }, 1500);
-
-    function updateBalance() {
-      document.getElementById('headerBalance').innerText = balance;
-    }
-
-    function watchAd(amount) {
-      if (dailyAdsWatched >= 10) return alert("Aaj ke 10 ads khatam!");
-      balance += amount;
-      dailyAdsWatched++;
-      updateBalance();
-      alert(`✅ ₹${amount} add ho gaya!`);
-    }
-
-    function redeemGift(gift) {
-      if (balance < 50) return alert("Minimum ₹50 chahiye");
-      alert(`✅ ₹${balance} ka ${gift} aapke account mein bhej diya gaya!`);
-      balance = 0;
-      updateBalance();
-    }
-
-    function comingSoon(name) {
-      alert(name + " jaldi aa raha hai! Stay Tuned 🔥");
-    }
-
-    function showPage(page) {
-      const content = document.getElementById('mainContent');
-      
-      if (page === 0) {
-        content.innerHTML = `
-          <h2 style="text-align:center; margin:25px 0 15px;">More Ways to Earn</h2>
-          <div class="feature-card" onclick="comingSoon('Spin & Earn')">🎰 Spin & Earn <span style="color:#ff9800;">(Coming Soon)</span></div>
-          <div class="feature-card" onclick="comingSoon('Play Quiz')">❓ Play Quiz <span style="color:#ff9800;">(Coming Soon)</span></div>
-          <div class="feature-card" onclick="comingSoon('Math Quiz')">🔢 Math Quiz <span style="color:#ff9800;">(Coming Soon)</span></div>
-        `;
-      } else if (page === 1) {
-        content.innerHTML = `
-          <h3 style="text-align:center;margin:20px 0;">Watch Ads & Earn ₹1</h3>
-          <div class="feature-card" onclick="watchAd(1)">▶ Watch Video Ad<br><strong>+ ₹1</strong></div>
-          <div class="feature-card" onclick="watchAd(1)">▶ Watch Video Ad<br><strong>+ ₹1</strong></div>
-        `;
-      } else if (page === 2) {
-        content.innerHTML = `
-          <h3 style="text-align:center;margin:25px 0;">Redeem Your Earnings</h3>
-          <div class="feature-card" onclick="redeemGift('Play Store Gift Card')">🎮 Play Store Gift Card</div>
-          <div class="feature-card" onclick="redeemGift('Amazon Gift Card')">📦 Amazon Gift Card</div>
-          <div class="feature-card" onclick="redeemGift('Flipkart Gift Card')">🛒 Flipkart Gift Card</div>
-        `;
-      }
+    function earn(amt) {
+      balance += amt;
+      document.getElementById('bal').innerText = balance;
+      alert('✅ ₹' + amt + ' add ho gaya!');
     }
   </script>
 </body>
