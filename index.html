@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="hi">
 <head>
@@ -52,17 +53,21 @@
       document.getElementById('headerBalance').innerText = balance;
     }
 
-    function watchAd(amount) {
+    function watchAd() {
       if (dailyAdsWatched >= 10) return alert("Aaj ke 10 ads khatam!");
-      balance += amount;
+      
+      // Ads open karne ke liye
+      alert("Ad Loading... Please Wait");
+      balance += 1;
       dailyAdsWatched++;
       updateBalance();
-      alert(`✅ ₹${amount} add ho gaya!`);
+      alert(`✅ ₹1 add ho gaya!`);
     }
 
     function redeemGift(gift) {
-      if (balance < 10) return alert("Minimum ₹10 chahiye");
-      const email = prompt(`Enter your Email ID for ${gift}\nAmount: ₹${balance}`);
+      if (balance < 10) return alert("Minimum ₹10 chahiye redeem karne ke liye");
+      
+      const email = prompt(`Enter your Email ID for ${gift}\n\nAmount: ₹${balance}\n\nEnter your balance to redeem gift card`);
       if (email && email.includes("@")) {
         alert(`✅ ₹${balance} ka ${gift} aapke email ${email} par bhej diya gaya!`);
         balance = 0;
@@ -79,7 +84,7 @@
     function showPage(page) {
       const content = document.getElementById('mainContent');
       
-      if (page === 0) { // HOME
+      if (page === 0) {
         content.innerHTML = `
           <h2 style="text-align:center; margin:25px 0 15px;">More Ways to Earn</h2>
           <div class="feature-card" onclick="comingSoon('Spin & Earn')">🎰 Spin & Earn <span style="color:#ff9800;">(Coming Soon)</span></div>
@@ -90,8 +95,8 @@
       else if (page === 1) { // Watch Ads
         content.innerHTML = `
           <h3 style="text-align:center;margin:20px 0;">Watch Ads & Earn ₹1</h3>
-          <div class="feature-card" onclick="watchAd(1)">▶ Watch Video Ad<br><strong>+ ₹1</strong></div>
-          <div class="feature-card" onclick="watchAd(1)">▶ Watch Video Ad<br><strong>+ ₹1</strong></div>
+          <div class="feature-card" onclick="watchAd()">▶ Watch Video Ad<br><strong>+ ₹1</strong></div>
+          <div class="feature-card" onclick="watchAd()">▶ Watch Video Ad<br><strong>+ ₹1</strong></div>
         `;
       } 
       else if (page === 2) { // Redeem
