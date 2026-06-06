@@ -1,132 +1,455 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AdKamao - Admin Panel</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <style>
-    * { margin:0; padding:0; box-sizing:border-box; }
-    body { font-family: Arial, sans-serif; background:#f4f6f9; }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>AdsDekho PaiseKamao - Real Cash Rewards</title>
     
-    .login-screen {
-      position: fixed; top:0; left:0; width:100%; height:100vh;
-      background: linear-gradient(135deg, #1e2937, #334155);
-      display: flex; align-items:center; justify-content:center; z-index: 10000;
-    }
-    .login-box { background: white; padding: 40px; border-radius: 16px; width: 90%; max-width: 380px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
-    
-    .sidebar { width: 260px; background: #1e2937; color: white; position: fixed; height: 100%; padding: 20px 0; }
-    .main-content { margin-left: 260px; padding: 20px; }
-    .header { background: white; padding: 15px 25px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); display:flex; justify-content:space-between; align-items:center; }
-    .card { background: white; border-radius: 12px; padding: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); margin-bottom: 20px; text-align:center; }
-    table { width:100%; border-collapse: collapse; margin-top: 15px; }
-    th, td { padding: 14px; text-align: left; border-bottom: 1px solid #ddd; }
-    th { background: #f8fafc; }
-    .btn { padding: 8px 16px; border: none; border-radius: 8px; cursor: pointer; font-size: 14px; }
-    .btn-green { background: #22c55e; color: white; }
-    .btn-red { background: #ef4444; color: white; }
-  </style>
+    <style>
+        :root {
+            --bg-gradient: linear-gradient(135deg, #09070f 0%, #130f26 100%);
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --card-border: rgba(255, 255, 255, 0.09);
+            --accent-green: #00ff66;
+            --accent-purple: #9d4edd;
+            --accent-red: #ff3b30;
+            --text-main: #ffffff;
+            --text-muted: #94a3b8;
+            --amazon-color: #ff9900;
+            --playstore-color: #3bccff;
+            --flipkart-color: #2874f0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background: var(--bg-gradient);
+            color: var(--text-main);
+            min-height: 100vh;
+            padding-bottom: 90px;
+            overflow-x: hidden;
+        }
+
+        header {
+            background: rgba(19, 15, 38, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 16px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--card-border);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 20px;
+            font-weight: 900;
+            background: linear-gradient(45deg, #00ff66, #00e5ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.5px;
+            cursor: pointer; /* Secret admin trigger */
+        }
+
+        .logo span { color: #ffffff; -webkit-text-fill-color: #ffffff; font-weight: 400; }
+
+        .wallet-box {
+            background: rgba(0, 255, 102, 0.12);
+            border: 1px solid rgba(0, 255, 102, 0.25);
+            color: var(--accent-green);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 0 15px rgba(0, 255, 102, 0.08);
+        }
+
+        .app-container {
+            padding: 20px;
+            max-width: 480px;
+            margin: 0 auto;
+        }
+
+        .section { display: none; }
+        .section.active { display: block; animation: appSlideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+
+        @keyframes appSlideUp {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .premium-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            backdrop-filter: blur(10px);
+            border-radius: 22px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.25);
+        }
+
+        .premium-card h2, .premium-card h3 { font-size: 20px; font-weight: 700; margin-bottom: 6px; }
+        .premium-card p { color: var(--text-muted); font-size: 14px; line-height: 1.4; }
+
+        .app-btn {
+            background: linear-gradient(135deg, #9d4edd 0%, #6a0dad 100%);
+            color: white;
+            border: none;
+            padding: 14px 20px;
+            font-size: 15px;
+            font-weight: 600;
+            border-radius: 14px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 15px;
+            box-shadow: 0 4px 15px rgba(157, 77, 221, 0.25);
+            transition: all 0.2s ease;
+        }
+
+        .app-btn:active { transform: scale(0.97); }
+        .app-btn.secondary {
+            background: linear-gradient(135deg, #00ff66 0%, #00b0ff 100%);
+            box-shadow: 0 4px 15px rgba(0, 255, 102, 0.15);
+            color: #09070f;
+            font-weight: 700;
+        }
+
+        .coming-soon-card { background: rgba(255, 255, 255, 0.01); border-left: 4px solid var(--text-muted); opacity: 0.55; }
+        .premium-badge {
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--text-muted);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            display: inline-block;
+            margin-top: 8px;
+            text-transform: uppercase;
+        }
+
+        .giftcard-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 15px 0; }
+        .giftcard-option {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--card-border);
+            border-radius: 14px;
+            padding: 12px 6px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+        }
+        .giftcard-option .gc-icon { font-size: 24px; }
+        .giftcard-option span { font-size: 11px; font-weight: 600; color: var(--text-muted); }
+
+        .giftcard-option.active[data-brand="amazon"] { border-color: var(--amazon-color); background: rgba(255, 153, 0, 0.12); }
+        .giftcard-option.active[data-brand="playstore"] { border-color: var(--playstore-color); background: rgba(59, 204, 255, 0.12); }
+        .giftcard-option.active[data-brand="flipkart"] { border-color: var(--flipkart-color); background: rgba(40, 116, 240, 0.12); }
+        .giftcard-option.active span { color: white; font-weight: 700; }
+
+        .dynamic-form-panel { margin-top: 20px; background: rgba(0, 0, 0, 0.2); padding: 16px; border-radius: 14px; border: 1px solid var(--card-border); }
+        .form-title-badge { font-size: 13px; font-weight: 700; margin-bottom: 15px; display: flex; align-items: center; gap: 8px; }
+
+        .form-group { text-align: left; margin-bottom: 16px; }
+        .form-group label { display: block; margin-bottom: 6px; font-size: 13px; color: var(--text-muted); }
+        .form-group input {
+            width: 100%; padding: 14px; background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--card-border); border-radius: 12px; font-size: 15px; color: white;
+        }
+
+        .bottom-nav {
+            position: fixed; bottom: 0; left: 0; right: 0;
+            background: rgba(9, 7, 15, 0.92); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            display: flex; justify-content: space-around; border-top: 1px solid var(--card-border);
+            padding: 12px 0 calc(10px + env(safe-area-inset-bottom)); z-index: 1000;
+        }
+        .nav-item { display: flex; flex-direction: column; align-items: center; justify-content: center; flex: 1; color: var(--text-muted); cursor: pointer; font-size: 12px; font-weight: 600; }
+        .nav-icon { font-size: 22px; margin-bottom: 3px; }
+        .nav-item.active { color: var(--accent-green); }
+
+        /* ADMIN PANEL LAYOUT STYLES */
+        .admin-req-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 14px;
+            margin-bottom: 12px;
+        }
+        .admin-req-details { font-size: 13px; line-height: 1.5; color: var(--text-muted); margin-bottom: 10px; }
+        .admin-req-details b { color: white; }
+        .admin-actions { display: flex; gap: 10px; }
+        .adm-btn { flex: 1; padding: 10px; border: none; font-size: 13px; font-weight: 700; border-radius: 10px; cursor: pointer; }
+        .adm-btn.approve { background: var(--accent-green); color: #09070f; }
+        .adm-btn.reject { background: var(--accent-red); color: white; }
+        .status-badge { display: inline-block; padding: 3px 8px; border-radius: 6px; font-size: 11px; font-weight: 700; text-transform: uppercase; }
+        .status-approved { background: rgba(0, 255, 102, 0.15); color: var(--accent-green); }
+        .status-rejected { background: rgba(255, 59, 48, 0.15); color: #ff5252; }
+
+        #inapp-ad-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: #000000;
+            z-index: 99999;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding-top: 90px;
+        }
+
+        .ad-modal-header {
+            position: absolute; top: 20px; left: 20px; right: 20px;
+            display: flex; justify-content: space-between; align-items: center;
+            z-index: 100000;
+        }
+
+        .ad-timer-badge {
+            background: rgba(255, 0, 0, 0.15);
+            border: 1px solid #ff3b30;
+            padding: 10px 20px; border-radius: 30px;
+            font-size: 15px; font-weight: 700; color: #ff5252;
+        }
+
+        .ad-close-btn {
+            display: none;
+            background: var(--accent-green); color: #09070f;
+            border: none; padding: 10px 22px; border-radius: 25px;
+            font-size: 15px; font-weight: 800; cursor: pointer;
+            box-shadow: 0 0 15px var(--accent-green);
+        }
+
+        .ad-viewport-body {
+            width: 92%; height: calc(100vh - 180px);
+            background: #0b0813;
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            display: block;
+            overflow: hidden;
+        }
+    </style>
 </head>
 <body>
 
-  <!-- Login Screen -->
-  <div id="loginScreen" class="login-screen">
-    <div class="login-box">
-      <h2>🔐 Admin Login</h2>
-      <p style="margin:20px 0 30px; color:#666;">AdKamao Admin Panel</p>
-      <input type="password" id="adminPass" placeholder="Enter Password" style="width:100%; padding:15px; margin-bottom:15px; border-radius:8px; border:1px solid #ccc;">
-      <button onclick="checkPassword()" style="width:100%; padding:15px; background:#4CAF50; color:white; border:none; border-radius:8px; font-size:16px;">Login</button>
-      <p id="errorMsg" style="color:red; margin-top:10px;"></p>
-    </div>
-  </div>
-
-  <!-- Admin Panel -->
-  <div id="adminPanel" style="display:none;">
-    <div class="sidebar">
-      <h2 style="padding:0 20px; margin-bottom:40px; color:#4CAF50;">AdKamao Admin</h2>
-      <div style="padding:12px 20px; background:#334155; cursor:pointer;" onclick="showSection('dashboard')">🏠 Dashboard</div>
-      <div style="padding:12px 20px; cursor:pointer;" onclick="showSection('users')">👥 All Users</div>
-      <div style="padding:12px 20px; cursor:pointer;" onclick="showSection('withdraw')">💰 Withdraw Requests</div>
-      <div style="padding:12px 20px; cursor:pointer;" onclick="logout()">🚪 Logout</div>
-    </div>
-
-    <div class="header">
-      <h2 id="pageTitle">Dashboard</h2>
-      <div>Admin Panel</div>
-    </div>
-
-    <div class="main-content">
-
-      <!-- Dashboard -->
-      <div id="dashboard" class="section">
-        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px,1fr)); gap:20px;">
-          <div class="card">
-            <h3>Total Users</h3>
-            <h2 style="color:#4CAF50; font-size:42px;">0</h2>
-          </div>
-          <div class="card">
-            <h3>Total Website Views</h3>
-            <h2 style="color:#4CAF50; font-size:42px;">0</h2>
-          </div>
-          <div class="card">
-            <h3>Pending Withdrawals</h3>
-            <h2 style="color:#f59e0b; font-size:42px;">₹0</h2>
-          </div>
-          <div class="card">
-            <h3>Success Withdrawals</h3>
-            <h2 style="color:#22c55e; font-size:42px;">₹0</h2>
-          </div>
+    <header>
+        <div class="logo" onclick="triggerAdminSecret()">AdsDekho <span>PaiseKamao</span></div>
+        <div class="wallet-box">
+            <span>🪙</span>₹<span id="balance">0.00</span>
         </div>
-      </div>
+    </header>
 
-      <!-- Users -->
-      <div id="users" class="section" style="display:none;">
-        <h2>All Users</h2>
-        <table>
-          <tr><th>Phone Number</th><th>Balance</th><th>Joined</th><th>Status</th></tr>
-          <tr><td colspan="4" style="text-align:center; color:#888; padding:80px;">No users yet</td></tr>
-        </table>
-      </div>
+    <div class="app-container">
 
-      <!-- Withdraw Requests -->
-      <div id="withdraw" class="section" style="display:none;">
-        <h2>Withdraw Requests</h2>
-        <table>
-          <tr><th>Phone</th><th>Amount</th><th>Gift Card</th><th>Date</th><th>Action</th></tr>
-          <tr><td colspan="5" style="text-align:center; color:#888; padding:80px;">No pending requests</td></tr>
-        </table>
-      </div>
+        <div id="home" class="section active">
+            <div class="premium-card" style="background: linear-gradient(45deg, rgba(157,77,221,0.12), rgba(0,255,102,0.03));">
+                <h2>Welcome Back! 👋</h2>
+                <p>Tasks poore kijiye aur apna wallet balance instant badhaiye.</p>
+            </div>
+
+            <div class="premium-card coming-soon-card">
+                <h3>Lucky Spin Wheel 🎡</h3>
+                <span class="premium-badge">Coming Soon</span>
+            </div>
+
+            <div class="premium-card coming-soon-card">
+                <h3>Gk Quiz 🧠</h3>
+                <span class="premium-badge">Coming Soon</span>
+            </div>
+
+            <div class="premium-card coming-soon-card">
+                <h3>Math Quiz ➗</h3>
+                <span class="premium-badge">Coming Soon</span>
+            </div>
+        </div>
+
+        <div id="view-ads" class="section">
+            <div class="premium-card">
+                <h2>Watch Premium Ads</h2>
+                <p style="margin-bottom: 12px;">Neeche button par click karein, video popup layout load hoga aur 30s ka timer shuru ho jayega.</p>
+                <button class="app-btn secondary" onclick="openInAppAdEngine()">Watch Video Ad (+ ₹0.50)</button>
+            </div>
+        </div>
+
+        <div id="redeem" class="section">
+            <div class="premium-card">
+                <h2>Redeem Gift Card 🎁</h2>
+                <div style="background: rgba(255,255,255,0.02); padding: 10px; border-radius: 12px; margin-top: 12px; text-align: center; border: 1px solid var(--card-border);">
+                    <span style="font-size: 12px; color: var(--text-muted);">Minimum Withdrawal Amount: <b>₹10.00</b></span>
+                </div>
+
+                <div class="giftcard-grid">
+                    <div class="giftcard-option active" data-brand="amazon" onclick="selectGiftCard('amazon', 'Amazon Gift Card 🛒')">
+                        <span class="gc-icon">📦</span><span>Amazon Pay</span>
+                    </div>
+                    <div class="giftcard-option" data-brand="playstore" onclick="selectGiftCard('playstore', 'Google Play Store Redeem Code 🕹️')">
+                        <span class="gc-icon">🎯</span><span>Play Store</span>
+                    </div>
+                    <div class="giftcard-option" data-brand="flipkart" onclick="selectGiftCard('flipkart', 'Flipkart Gift Card 🛍️')">
+                        <span class="gc-icon">⚡</span><span>Flipkart</span>
+                    </div>
+                </div>
+
+                <div class="dynamic-form-panel">
+                    <div class="form-title-badge" id="selected-card-title">📦 Amazon Gift Card 🛒</div>
+                    <form id="payout-form" onsubmit="handleGiftCardRedeem(event)">
+                        <div class="form-group">
+                            <label>Enter your Email ID</label>
+                            <input type="email" id="user-email" placeholder="aapkaname@gmail.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Enter your amount</label>
+                            <input type="number" id="payout-amount" min="10" placeholder="Minimum amount ₹10" required>
+                        </div>
+                        <button type="submit" class="app-btn">Confirm Redemption</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div id="admin-panel" class="section">
+            <div class="premium-card" style="border-color: var(--accent-purple);">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                    <h2>Admin Dashboard 🛠️</h2>
+                    <button onclick="exitAdminPanel()" style="background: rgba(255,255,255,0.08); color: white; border: none; padding: 4px 10px; border-radius: 8px; font-size: 11px; cursor: pointer;">Exit Admin</button>
+                </div>
+                <p style="margin-bottom: 15px;">Yahan aap sabhi users ke withdrawal request list ko approve ya reject kar sakte hain.</p>
+                
+                <div id="admin-requests-list">
+                    <p style="text-align: center; color: var(--text-muted); font-size: 13px; padding: 20px 0;">No redemption requests found.</p>
+                </div>
+            </div>
+        </div>
 
     </div>
-  </div>
 
-  <script>
-    const ADMIN_PASSWORD = "Virux@123";
+    <div id="inapp-ad-modal">
+        <div class="ad-modal-header">
+            <div class="ad-timer-badge" id="ad-timer-text">⏳ 30s Remaining</div>
+            <button class="ad-close-btn" id="ad-close-action" onclick="closeInAppAdEngine()">❌ Close Ad</button>
+        </div>
+        <iframe class="ad-viewport-body" id="ad-target-frame" sandbox="allow-scripts allow-same-origin allow-popups allow-forms"></iframe>
+    </div>
 
-    function checkPassword() {
-      if (document.getElementById('adminPass').value === ADMIN_PASSWORD) {
-        document.getElementById('loginScreen').style.display = 'none';
-        document.getElementById('adminPanel').style.display = 'block';
-      } else {
-        document.getElementById('errorMsg').innerText = "❌ Galat Password";
-      }
-    }
+    <nav class="bottom-nav" id="main-navigation-bar">
+        <div class="nav-item active" onclick="switchToTab('home', this)"><span class="nav-icon">🏠</span><span>Home</span></div>
+        <div class="nav-item" onclick="switchToTab('view-ads', this)"><span class="nav-icon">📺</span><span>View Ads</span></div>
+        <div class="nav-item" onclick="switchToTab('redeem', this)"><span class="nav-icon">🎁</span><span>Redeem</span></div>
+    </nav>
 
-    function showSection(section) {
-      document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
-      document.getElementById(section).style.display = 'block';
-      document.getElementById('pageTitle').innerText = 
-        section === 'dashboard' ? 'Dashboard' : 
-        section === 'users' ? 'All Users' : 'Withdraw Requests';
-    }
+    <script>
+        let walletBalance = parseFloat(localStorage.getItem('adsdekho_pk_bal')) || 0.00;
+        let selectedBrandName = "Amazon Gift Card 🛒";
+        let countdownInterval;
+        
+        // ADMIN UTILITY STATES
+        let adminClickCount = 0;
+        const ADMIN_PASSWORD = "1234"; // 🌟 Aap apna password yahan badal sakte ho!
+        let withdrawalRequests = JSON.parse(localStorage.getItem('adsdekho_requests')) || [];
 
-    function logout() {
-      if(confirm("Logout karna hai?")) location.reload();
-    }
+        updateUIBalance();
 
-    // Default open Dashboard
-    showSection('dashboard');
-  </script>
-</body>
-          </html>
+        function updateUIBalance() {
+            document.getElementById('balance').innerText = walletBalance.toFixed(2);
+            localStorage.setItem('adsdekho_pk_bal', walletBalance);
+        }
+
+        function switchToTab(targetSection, menuElement) {
+            document.querySelectorAll('.section').forEach(view => view.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(targetSection).classList.add('active');
+            if(menuElement) menuElement.classList.add('active');
+        }
+
+        function selectGiftCard(brandKey, fullTitle) {
+            document.querySelectorAll('.giftcard-option').forEach(opt => opt.classList.remove('active'));
+            document.querySelector(`.giftcard-option[data-brand="${brandKey}"]`).classList.add('active');
+            document.getElementById('selected-card-title').innerHTML = fullTitle;
+            selectedBrandName = fullTitle;
+        }
+
+        function openInAppAdEngine() {
+            const modal = document.getElementById('inapp-ad-modal');
+            modal.style.display = 'flex';
+            document.getElementById('ad-close-action').style.display = 'none';
+            document.getElementById('ad-timer-text').style.display = 'block';
+            
+            const directSmartLink = "https://www.effectivecpmnetwork.com/m2ds8022zn?key=b7ed26fc3794ac80821ca064a92d5e76"; 
+            const frame = document.getElementById('ad-target-frame');
+            frame.src = directSmartLink;
+
+            let timeLeft = 30;
+            document.getElementById('ad-timer-text').innerText = `⏳ ${timeLeft}s Remaining`;
+            
+            clearInterval(countdownInterval);
+            countdownInterval = setInterval(() => {
+                timeLeft--;
+                if (timeLeft <= 0) {
+                    clearInterval(countdownInterval);
+                    document.getElementById('ad-timer-text').style.display = 'none';
+                    document.getElementById('ad-close-action').style.display = 'block';
+                } else {
+                    document.getElementById('ad-timer-text').innerText = `⏳ ${timeLeft}s Remaining`;
+                }
+            }, 1000);
+        }
+
+        function closeInAppAdEngine() {
+            document.getElementById('inapp-ad-modal').style.display = 'none';
+            document.getElementById('ad-target-frame').src = "about:blank"; 
+            walletBalance += 0.50;
+            updateUIBalance();
+            alert("✨ Mubarak ho! Aapne ad ko poora 30s dekha. ₹0.50 aapke wallet me safe credit ho chuke hain.");
+        }
+
+        // REDEEM HANDLE & ADMIN DATA PUSH ENGINE
+        function handleGiftCardRedeem(event) {
+            event.preventDefault();
+            const emailField = document.getElementById('user-email').value;
+            const amountField = parseFloat(document.getElementById('payout-amount').value);
+
+            if (amountField < 10) { 
+                alert("AdsDekho Security: Minimum limit ₹10."); 
+                return; 
+            }
+            if (walletBalance < amountField) { 
+                alert(`Insufficient Balance! Aapke paas sirf ₹${walletBalance.toFixed(2)} hain.`); 
+                return; 
+            }
+
+            walletBalance -= amountField;
+            updateUIBalance();
+            
+            // Generate request inside admin server log
+            const newRequest = {
+                id: Date.now(),
+                email: emailField,
+                amount: amountField,
+                method: selectedBrandName,
+                status: 'pending'
+            };
+            withdrawalRequests.push(newRequest);
+            localStorage.setItem('adsdekho_requests', JSON.stringify(withdrawalRequests));
+            
+            alert("your ballance redeem successfully please check your email id");
+            document.getElementById('payout-form').reset();
+        }
+
+        // SECRET ADMIN TRIGGER: Header Ke Logo Par 5 Baar Click Karo
+        function triggerAdminSecret() {
+            adminClickCount++;
+            if (adminClickCount >= 5) {
+                adminClickCount = 0;
+                let pass = prompt("🔒 Enter 
