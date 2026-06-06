@@ -2,72 +2,125 @@
 <html lang="hi">
 <head>
   <meta charset="UTF-8">
-  <title>My Website</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AdKamao</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
-    body { font-family: Arial, sans-serif; text-align: center; padding: 50px; }
-    
-    .watch-ad-btn {
-      padding: 18px 40px;
-      font-size: 20px;
-      background: #e60000;
-      color: white;
-      border: none;
-      border-radius: 50px;
-      cursor: pointer;
-      box-shadow: 0 5px 15px rgba(230,0,0,0.4);
-      margin: 30px;
-    }
-    
-    .watch-ad-btn:hover {
-      background: #ff1a1a;
-      transform: scale(1.05);
-    }
-
-    .ad-container {
-      display: none;        /* Important: Pehle hide */
-      margin: 40px auto;
-      max-width: 800px;
-    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family: Arial, sans-serif; background:#f0f2f5; }
+    .splash { position:fixed; top:0; left:0; width:100%; height:100vh; background:linear-gradient(135deg,#4CAF50,#2E8B57); color:white; display:flex; align-items:center; justify-content:center; flex-direction:column; z-index:9999; }
+    .app { max-width:480px; margin:0 auto; height:100vh; background:white; box-shadow:0 0 20px rgba(0,0,0,0.1); display:flex; flex-direction:column; }
+    header { background:linear-gradient(135deg,#4CAF50,#2E8B57); color:white; padding:15px 20px; display:flex; justify-content:space-between; align-items:center; }
+    .balance-header { font-size:24px; font-weight:bold; background:rgba(255,255,255,0.3); padding:8px 18px; border-radius:30px; }
+    .feature-card { background:white; padding:22px; margin:12px; border-radius:16px; text-align:center; box-shadow:0 4px 15px rgba(0,0,0,0.1); cursor:pointer; }
   </style>
 </head>
 <body>
 
-  <h1>Welcome to My Website</h1>
-  <p>Aapka content yahan rahega...</p>
-
-  <!-- Watch Ad Button -->
-  <button class="watch-ad-btn" onclick="openAd()">
-    ▶️ Watch Ad to Continue
-  </button>
-
-  <!-- Ad Area (sirf click pe dikhega) -->
-  <div class="ad-container" id="adContainer">
-    <h3>Ad Loading...</h3>
-    <div id="adSlot"></div>
+  <div id="splash" class="splash">
+    <h1>AdKamao</h1>
+    <p>Ads Dekho, Paise Kamao</p>
   </div>
 
-<script>
-// Sirf button click pe ad khulega
-function openAd() {
-  document.getElementById('adContainer').style.display = 'block';
-  
-  // ==== Ad Code Yahan Daalo (Auto nahi chalega) ====
-  
-  // Example 1: Google AdSense
-  // var adScript = document.createElement('script');
-  // adScript.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXX";
-  // document.getElementById('adSlot').appendChild(adScript);
-  
-  // Example 2: Simple Pop-under / New Tab Ad
-  // window.open('https://your-ad-link.com', '_blank');
-  
-  // Example 3: PropellerAds / Adsterra direct code
-  // (function(){ ... your ad code ... })();
-  
-  // Button ko hide kar do (ek baar click ho gaya)
-  // document.querySelector('.watch-ad-btn').style.display = 'none';
-}
-</script>
+  <div id="app" class="app" style="display:none;">
+    <header>
+      <h1>AdKamao</h1>
+      <div class="balance-header">₹<span id="headerBalance">0</span></div>
+    </header>
+
+    <div id="mainContent" style="flex:1; padding:15px; overflow-y:auto;"></div>
+
+    <!-- Bottom Navigation -->
+    <div style="display:flex; justify-content:space-around; background:white; border-top:1px solid #ddd; padding:12px 0; position:fixed; bottom:0; width:100%; max-width:480px;">
+      <div onclick="showPage(0)" style="text-align:center;color:#4CAF50;"><i class="fas fa-home" style="font-size:24px;"></i><br>Home</div>
+      <div onclick="showPage(1)" style="text-align:center;color:#666;"><i class="fas fa-play-circle" style="font-size:24px;"></i><br>Watch Ads</div>
+      <div onclick="showPage(2)" style="text-align:center;color:#666;"><i class="fas fa-gift" style="font-size:24px;"></i><br>Redeem</div>
+    </div>
+  </div>
+
+  <script>
+    let balance = 0;
+    let dailyAdsWatched = 0;
+
+    setTimeout(() => {
+      document.getElementById('splash').style.display = 'none';
+      document.getElementById('app').style.display = 'flex';
+      showPage(0);   // Home page pehle khulega
+    }, 1500);
+
+    function updateBalance() {
+      document.getElementById('headerBalance').innerText = balance;
+    }
+
+    function watchAd(amount) {
+      if (dailyAdsWatched >= 10) return alert("Aaj ke 10 ads khatam!");
+      balance += amount;
+      dailyAdsWatched++;
+      updateBalance();
+      alert(`✅ ₹${amount} add ho gaya!`);
+    }
+
+    function redeemGift(gift) {
+      if (balance < 10) return alert("Minimum ₹10 chahiye");
+      const email = prompt(`Enter your Email ID for ${gift}\nAmount: ₹${balance}`);
+      if (email && email.includes("@")) {
+        alert(`✅ ₹${balance} ka ${gift} aapke email ${email} par bhej diya gaya!`);
+        balance = 0;
+        updateBalance();
+      } else {
+        alert("Valid Email ID daaliye");
+      }
+    }
+
+    function comingSoon(name) {
+      alert(name + " jaldi aa raha hai! Stay Tuned 🔥");
+    }
+
+    function showPage(page) {
+      const content = document.getElementById('mainContent');
+      
+      if (page === 0) { // HOME
+        content.innerHTML = `
+          <h2 style="text-align:center; margin:25px 0 15px;">More Ways to Earn</h2>
+          <div class="feature-card" onclick="comingSoon('Spin & Earn')">🎰 Spin & Earn <span style="color:#ff9800;">(Coming Soon)</span></div>
+          <div class="feature-card" onclick="comingSoon('Play Quiz')">❓ Play Quiz <span style="color:#ff9800;">(Coming Soon)</span></div>
+          <div class="feature-card" onclick="comingSoon('Math Quiz')">🔢 Math Quiz <span style="color:#ff9800;">(Coming Soon)</span></div>
+        `;
+      } 
+      else if (page === 1) { // Watch Ads
+        content.innerHTML = `
+          <h3 style="text-align:center;margin:20px 0;">Watch Ads & Earn ₹1</h3>
+          <div class="feature-card" onclick="watchAd(1)">▶ Watch Video Ad<br><strong>+ ₹1</strong></div>
+          <div class="feature-card" onclick="watchAd(1)">▶ Watch Video Ad<br><strong>+ ₹1</strong></div>
+        `;
+      } 
+      else if (page === 2) { // Redeem
+        content.innerHTML = `
+          <h3 style="text-align:center;margin:25px 0;">Redeem Your Earnings (Min ₹10)</h3>
+          <div class="feature-card" onclick="redeemGift('Play Store Gift Card')">🎮 Play Store Gift Card</div>
+          <div class="feature-card" onclick="redeemGift('Amazon Gift Card')">📦 Amazon Gift Card</div>
+          <div class="feature-card" onclick="redeemGift('Flipkart Gift Card')">🛒 Flipkart Gift Card</div>
+        `;
+      }
+    }
+  </script>
+
+  <!-- ================== Adsterra Ads ================== -->
+  <script src="https://pl29653945.effectivecpmnetwork.com/46/85/fa/4685fafb5472ddac3cd72b2b389c7bc4.js"></script>
+
+  <div style="margin:15px auto; text-align:center;">
+    <script>
+      atOptions = {'key':'b92a026cc433822f579cfe7965286307','format':'iframe','height':60,'width':468,'params':{}};
+    </script>
+    <script src="https://www.highperformanceformat.com/b92a026cc433822f579cfe7965286307/invoke.js"></script>
+  </div>
+
+  <div style="margin:15px auto; text-align:center;">
+    <script>
+      atOptions = {'key':'df54788aa24c0780ac4cda38795bd285','format':'iframe','height':300,'width':160,'params':{}};
+    </script>
+    <script src="https://www.highperformanceformat.com/df54788aa24c0780ac4cda38795bd285/invoke.js"></script>
+  </div>
 
 </body>
 </html>
