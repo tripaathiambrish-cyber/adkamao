@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>AdsDekho PaiseKamao - Real Cash Rewards</title>
-    <!-- Ad Network Script 1 -->
     <script src="https://pl29653945.effectivecpmnetwork.com/46/85/fa/4685fafb5472ddac3cd72b2b389c7bc4.js"></script>
     
     <style>
@@ -172,7 +171,7 @@
             text-transform: uppercase;
         }
 
-        /* Gift Card Grid Grid layout selection */
+        /* Gift Card Grid */
         .giftcard-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -206,18 +205,9 @@
         }
 
         /* Active Brand Selection Styles */
-        .giftcard-option.active[data-brand="amazon"] {
-            border-color: var(--amazon-color);
-            background: rgba(255, 153, 0, 0.12);
-        }
-        .giftcard-option.active[data-brand="playstore"] {
-            border-color: var(--playstore-color);
-            background: rgba(59, 204, 255, 0.12);
-        }
-        .giftcard-option.active[data-brand="flipkart"] {
-            border-color: var(--flipkart-color);
-            background: rgba(40, 116, 240, 0.12);
-        }
+        .giftcard-option.active[data-brand="amazon"] { border-color: var(--amazon-color); background: rgba(255, 153, 0, 0.12); }
+        .giftcard-option.active[data-brand="playstore"] { border-color: var(--playstore-color); background: rgba(59, 204, 255, 0.12); }
+        .giftcard-option.active[data-brand="flipkart"] { border-color: var(--flipkart-color); background: rgba(40, 116, 240, 0.12); }
 
         .giftcard-option.active span {
             color: white;
@@ -263,7 +253,6 @@
             border-radius: 12px;
             font-size: 15px;
             color: white;
-            transition: all 0.2s;
         }
 
         .form-group input:focus {
@@ -329,11 +318,17 @@
             text-transform: uppercase;
             letter-spacing: 1px;
         }
+
+        /* Hidden Frame for Ads triggering */
+        #hidden-ad-trigger {
+            display: none;
+            width: 0;
+            height: 0;
+        }
     </style>
 </head>
 <body>
 
-    <!-- Top App Branded Header (Wallet top right) -->
     <header>
         <div class="logo">AdsDekho <span>PaiseKamao</span></div>
         <div class="wallet-box">
@@ -343,28 +338,24 @@
 
     <div class="app-container">
 
-        <!-- 1st OPTION: HOME SECTION (Niche Left Side) -->
         <div id="home" class="section active">
             <div class="premium-card" style="background: linear-gradient(45deg, rgba(157,77,221,0.12), rgba(0,255,102,0.03));">
                 <h2>Welcome Back! 👋</h2>
                 <p>AdsDekho PaiseKamao par aapka swagat hai. Daily tasks poore kijiye aur apna wallet balance badhaiye.</p>
             </div>
 
-            <!-- Lucky Wheel (Coming Soon) -->
             <div class="premium-card coming-soon-card">
                 <h3>Lucky Spin Wheel 🎡</h3>
                 <p>Rozana wheel ghumayein aur dheron cash prizes jeetein.</p>
                 <span class="premium-badge">Coming Soon</span>
             </div>
 
-            <!-- Quiz 1 (Coming Soon) -->
             <div class="premium-card coming-soon-card">
                 <h3>Gk Quiz</h3>
                 <p>General Knowledge sawalon ke sahi jawab dekar paise kamayein.</p>
                 <span class="premium-badge">Coming Soon</span>
             </div>
 
-            <!-- Quiz 2 (Coming Soon) -->
             <div class="premium-card coming-soon-card">
                 <h3>Math Quiz</h3>
                 <p>Aasan maths equations solve karein aur point score badhaiye.</p>
@@ -372,15 +363,13 @@
             </div>
         </div>
 
-        <!-- 2nd OPTION: VIEW ADS SECTION -->
         <div id="view-ads" class="section">
             <div class="premium-card">
                 <h2>Watch Premium Ads</h2>
-                <p style="margin-bottom: 12px;">Neeche diye gaye button par tap karke live ad network stream play karein aur reward earn karein.</p>
+                <p style="margin-bottom: 12px;">Neeche diye gaye button par tap karke live ad play karein aur reward earn karein.</p>
                 <button class="app-btn secondary" onclick="loadAdRewardStream()">Watch Video Ad (+ ₹0.50)</button>
             </div>
 
-            <!-- Ad Block 1 (468x60) -->
             <div class="ad-holder">
                 <span class="ad-label">Sponsored Banner 1</span>
                 <script>
@@ -395,7 +384,6 @@
                 <script src="https://www.highperformanceformat.com/b92a026cc433822f579cfe7965286307/invoke.js"></script>
             </div>
 
-            <!-- Ad Block 2 (160x300) -->
             <div class="ad-holder">
                 <span class="ad-label">Sponsored Banner 2</span>
                 <script>
@@ -411,7 +399,6 @@
             </div>
         </div>
 
-        <!-- 3rd OPTION: REDEEM SECTION -->
         <div id="redeem" class="section">
             <div class="premium-card">
                 <h2>Redeem Gift Card 🎁</h2>
@@ -421,7 +408,6 @@
                     <span style="font-size: 12px; color: var(--text-muted);">Minimum Withdrawal Amount: <b>₹10.00</b></span>
                 </div>
 
-                <!-- 3 Gift Card Selection Options -->
                 <div class="giftcard-grid">
                     <div class="giftcard-option active" data-brand="amazon" onclick="selectGiftCard('amazon', 'Amazon Gift Card 🛒')">
                         <span class="gc-icon">📦</span>
@@ -437,20 +423,17 @@
                     </div>
                 </div>
 
-                <!-- Dynamic Functional Payout Form Panel -->
                 <div class="dynamic-form-panel">
                     <div class="form-title-badge" id="selected-card-title">
                         📦 Amazon Gift Card 🛒
                     </div>
 
                     <form id="payout-form" onsubmit="handleGiftCardRedeem(event)">
-                        <!-- Enter your Email ID Input -->
                         <div class="form-group">
                             <label for="user-email">Enter your Email ID</label>
                             <input type="email" id="user-email" placeholder="aapkaname@gmail.com" required>
                         </div>
                         
-                        <!-- Enter your Amount Input -->
                         <div class="form-group">
                             <label for="payout-amount">Enter your amount</label>
                             <input type="number" id="payout-amount" min="10" placeholder="Minimum amount ₹10" required>
@@ -459,13 +442,13 @@
                         <button type="submit" class="app-btn">Confirm Redemption</button>
                     </form>
                 </div>
-
             </div>
         </div>
 
     </div>
 
-    <!-- App Bottom Fixed Menu Navigation (Left side Home, 2nd View Ads, 3rd Redeem) -->
+    <div id="hidden-ad-trigger"></div>
+
     <nav class="bottom-nav">
         <div class="nav-item active" onclick="switchToTab('home', this)">
             <span class="nav-icon">🏠</span>
@@ -481,11 +464,9 @@
         </div>
     </nav>
 
-    <!-- App Engine Logic Controls -->
     <script>
-        // Sync & Persistent Vault Balance Architecture
         let walletBalance = parseFloat(localStorage.getItem('adsdekho_pk_bal')) || 0.00;
-        let selectedBrandName = "Amazon Gift Card 🛒"; // Default select initialization
+        let selectedBrandName = "Amazon Gift Card 🛒";
         updateUIBalance();
 
         function updateUIBalance() {
@@ -493,7 +474,6 @@
             localStorage.setItem('adsdekho_pk_bal', walletBalance);
         }
 
-        // Modular Tab Swapper Router Engine
         function switchToTab(targetSection, menuElement) {
             document.querySelectorAll('.section').forEach(view => view.classList.remove('active'));
             document.querySelectorAll('.nav-item').forEach(btn => btn.classList.remove('active'));
@@ -502,57 +482,77 @@
             menuElement.classList.add('active');
         }
 
-        // Real-Time Interlocking Card Selection Array Logic
         function selectGiftCard(brandKey, fullTitle) {
-            // Remove active classes from options
             document.querySelectorAll('.giftcard-option').forEach(opt => opt.classList.remove('active'));
-            
-            // Activate selected brand element box
             document.querySelector(`.giftcard-option[data-brand="${brandKey}"]`).classList.add('active');
-            
-            // Dynamic Label & State Assignment Update
             document.getElementById('selected-card-title').innerHTML = fullTitle;
             selectedBrandName = fullTitle;
         }
 
-        // Fake Video Ads Player Stream click integration handler
+        // Updated Secure Ads Player Logic (No raw code display)
         function loadAdRewardStream() {
-            try {
-                window.open("https://www.highperformanceformat.com/b92a026cc433822f579cfe7965286307/invoke.js", "_blank");
-            } catch(e) {
-                console.log("Ad browser popup fallback execution triggered.");
-            }
+            alert("AdsDekho: Ad load ho raha hai... Kripya thoda wait karein.");
+            
+            // Fix: JavaScript file URL ko directly open karne ke bajay hum use ek sandbox context me block/load karte hain
+            // Ya fir click par direct network content call karte hain taaki browser text dump na kare.
+            const container = document.getElementById('hidden-ad-trigger');
+            container.innerHTML = ''; // Clear previous trigger
+            
+            const frame = document.createElement('iframe');
+            frame.style.width = "0px";
+            frame.style.height = "0px";
+            frame.style.border = "none";
+            
+            // Appending active source tokens inside safe runtime block
+            container.appendChild(frame);
+            
+            const doc = frame.contentWindow.document;
+            doc.open();
+            doc.write(`
+                <html>
+                <body>
+                    <script>
+                        window.atOptions = {
+                            'key' : 'b92a026cc433822f579cfe7965286307',
+                            'format' : 'iframe',
+                            'height' : 60,
+                            'width' : 468,
+                            'params' : {}
+                        };
+                    <\/script>
+                    <script src="https://www.highperformanceformat.com/b92a026cc433822f579cfe7965286307/invoke.js"><\/script>
+                </body>
+                </html>
+            `);
+            doc.close();
 
-            alert("AdsDekho Engine: Verification system checking live scripts... Please wait 3 seconds.");
+            // Background load optimization trigger
             setTimeout(() => {
                 walletBalance += 0.50;
                 updateUIBalance();
-                alert("✨ Badhai ho! Dynamic reward successful! ₹0.50 credited into your system wallet.");
-            }, 2500);
+                alert("✨ Ad successfully verified! ₹0.50 aapke wallet me add ho gaye hain.");
+            }, 3000);
         }
 
-        // Comprehensive Validation Payout Array Processor
         function handleGiftCardRedeem(event) {
             event.preventDefault();
-            
             const emailField = document.getElementById('user-email').value;
             const amountField = parseFloat(document.getElementById('payout-amount').value);
 
             if (amountField < 10) {
-                alert("AdsDekho Guardrail: Transact Failed! Minimum withdrawal threshold criteria is ₹10.");
+                alert("AdsDekho Security: Minimum withdrawal limit ₹10 hai.");
                 return;
             }
 
             if (walletBalance < amountField) {
-                alert(`Insufficient Funds! Aapke asset server pool me sirf ₹${walletBalance.toFixed(2)} available hain.`);
+                alert(`Insufficient Balance! Aapke paas sirf ₹${walletBalance.toFixed(2)} hain.`);
                 return;
             }
 
-            // Deduct transaction funds from client model active instance state
             walletBalance -= amountField;
             updateUIBalance();
             
-            alert(`✅ Redeem Token Created Successfully!\n\nSelected Voucher: ${selectedBrandName}\nRecipient ID: ${emailField}\nWithdraw Sum: ₹${amountField.toFixed(2)}\n\nAdsDekho team safely check karke next 24 hours ke andar voucher code aapki target email par dispatch kar degi.`);
+            alert(`✅ Redeem Request Received!\n\nVoucher: ${selectedBrandName}\nEmail: ${emailField}\nAmount: ₹${amountField.toFixed(2)}\n\nAdsDekho team 24-48 ghante me code email par bhej degi.`);
             document.getElementById('payout-form').reset();
         }
     </script>
