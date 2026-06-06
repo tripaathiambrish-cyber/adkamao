@@ -16,6 +16,9 @@
             --accent-purple: #9d4edd;
             --text-main: #ffffff;
             --text-muted: #94a3b8;
+            --amazon-color: #ff9900;
+            --playstore-color: #3bccff;
+            --flipkart-color: #2874f0;
         }
 
         * {
@@ -150,42 +153,6 @@
             font-weight: 700;
         }
 
-        /* Interactive Spin Wheel UI */
-        .wheel-wrapper {
-            position: relative;
-            width: 160px;
-            height: 160px;
-            margin: 18px auto;
-        }
-
-        .spin-wheel {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            border: 4px solid rgba(255,255,255,0.15);
-            background: conic-gradient(
-                #9d4edd 0deg 72deg, 
-                #00e5ff 72deg 144deg, 
-                #00ff66 144deg 216deg, 
-                #ff3d00 216deg 288deg,
-                #ffea00 288deg 360deg
-            );
-            transition: transform 3s cubic-bezier(0.1, 0.8, 0.1, 1);
-        }
-
-        .wheel-pointer {
-            position: absolute;
-            top: -8px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 0;
-            height: 0;
-            border-left: 10px solid transparent;
-            border-right: 10px solid transparent;
-            border-top: 18px solid #ffffff;
-            z-index: 10;
-        }
-
         /* Coming Soon Sections */
         .coming-soon-card {
             background: rgba(255, 255, 255, 0.01);
@@ -203,6 +170,76 @@
             display: inline-block;
             margin-top: 8px;
             text-transform: uppercase;
+        }
+
+        /* Gift Card Grid Grid layout selection */
+        .giftcard-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .giftcard-option {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--card-border);
+            border-radius: 14px;
+            padding: 12px 6px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .giftcard-option .gc-icon {
+            font-size: 24px;
+        }
+
+        .giftcard-option span {
+            font-size: 11px;
+            font-weight: 600;
+            line-height: 1.2;
+            color: var(--text-muted);
+        }
+
+        /* Active Brand Selection Styles */
+        .giftcard-option.active[data-brand="amazon"] {
+            border-color: var(--amazon-color);
+            background: rgba(255, 153, 0, 0.12);
+        }
+        .giftcard-option.active[data-brand="playstore"] {
+            border-color: var(--playstore-color);
+            background: rgba(59, 204, 255, 0.12);
+        }
+        .giftcard-option.active[data-brand="flipkart"] {
+            border-color: var(--flipkart-color);
+            background: rgba(40, 116, 240, 0.12);
+        }
+
+        .giftcard-option.active span {
+            color: white;
+            font-weight: 700;
+        }
+
+        /* Dynamic Form Panel wrapper */
+        .dynamic-form-panel {
+            margin-top: 20px;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 16px;
+            border-radius: 14px;
+            border: 1px solid var(--card-border);
+        }
+
+        .form-title-badge {
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         /* Input Fields */
@@ -226,6 +263,7 @@
             border-radius: 12px;
             font-size: 15px;
             color: white;
+            transition: all 0.2s;
         }
 
         .form-group input:focus {
@@ -282,6 +320,7 @@
             flex-direction: column;
             align-items: center;
             gap: 10px;
+            min-height: 80px;
         }
 
         .ad-label {
@@ -294,7 +333,7 @@
 </head>
 <body>
 
-    <!-- Top App Branded Header -->
+    <!-- Top App Branded Header (Wallet top right) -->
     <header>
         <div class="logo">AdsDekho <span>PaiseKamao</span></div>
         <div class="wallet-box">
@@ -304,22 +343,18 @@
 
     <div class="app-container">
 
-        <!-- TAB 1: HOME SECTION -->
+        <!-- 1st OPTION: HOME SECTION (Niche Left Side) -->
         <div id="home" class="section active">
             <div class="premium-card" style="background: linear-gradient(45deg, rgba(157,77,221,0.12), rgba(0,255,102,0.03));">
                 <h2>Welcome Back! 👋</h2>
                 <p>AdsDekho PaiseKamao par aapka swagat hai. Daily tasks poore kijiye aur apna wallet balance badhaiye.</p>
             </div>
 
-            <!-- Lucky Fortune Spin Wheel -->
-            <div class="premium-card">
+            <!-- Lucky Wheel (Coming Soon) -->
+            <div class="premium-card coming-soon-card">
                 <h3>Lucky Spin Wheel 🎡</h3>
                 <p>Rozana wheel ghumayein aur dheron cash prizes jeetein.</p>
-                <div class="wheel-wrapper">
-                    <div class="wheel-pointer"></div>
-                    <div id="wheel" class="spin-wheel"></div>
-                </div>
-                <button class="app-btn" id="spin-button" onclick="startBrandedSpin()">Spin Now</button>
+                <span class="premium-badge">Coming Soon</span>
             </div>
 
             <!-- Quiz 1 (Coming Soon) -->
@@ -337,11 +372,11 @@
             </div>
         </div>
 
-        <!-- TAB 2: VIEW ADS SECTION -->
+        <!-- 2nd OPTION: VIEW ADS SECTION -->
         <div id="view-ads" class="section">
             <div class="premium-card">
                 <h2>Watch Premium Ads</h2>
-                <p style="margin-bottom: 12px;">Neeche diye gaye button par tap karke premium network streams load karein.</p>
+                <p style="margin-bottom: 12px;">Neeche diye gaye button par tap karke live ad network stream play karein aur reward earn karein.</p>
                 <button class="app-btn secondary" onclick="loadAdRewardStream()">Watch Video Ad (+ ₹0.50)</button>
             </div>
 
@@ -376,36 +411,61 @@
             </div>
         </div>
 
-        <!-- TAB 3: REDEEM SECTION -->
+        <!-- 3rd OPTION: REDEEM SECTION -->
         <div id="redeem" class="section">
             <div class="premium-card">
                 <h2>Redeem Gift Card 🎁</h2>
-                <p style="margin-bottom: 20px;">Apne kamaye huye paise ko turant apne email ID par transfer kijiye.</p>
+                <p>Apne pasandida brand ka option select karke balance safe withdraw kijiye.</p>
                 
-                <div style="background: rgba(255,255,255,0.02); padding: 14px; border-radius: 14px; margin-bottom: 20px; text-align: center; border: 1px solid var(--card-border);">
-                    <span style="font-size: 13px; color: var(--text-muted);">Minimum Withdrawal Amount</span>
-                    <div style="font-size: 24px; font-weight: 800; color: var(--accent-green);">₹10.00</div>
+                <div style="background: rgba(255,255,255,0.02); padding: 10px; border-radius: 12px; margin-top: 12px; text-align: center; border: 1px solid var(--card-border);">
+                    <span style="font-size: 12px; color: var(--text-muted);">Minimum Withdrawal Amount: <b>₹10.00</b></span>
                 </div>
 
-                <form id="payout-form" onsubmit="handleGiftCardRedeem(event)">
-                    <div class="form-group">
-                        <label for="user-email">Enter your Email ID</label>
-                        <input type="email" id="user-email" placeholder="aapkaname@gmail.com" required>
+                <!-- 3 Gift Card Selection Options -->
+                <div class="giftcard-grid">
+                    <div class="giftcard-option active" data-brand="amazon" onclick="selectGiftCard('amazon', 'Amazon Gift Card 🛒')">
+                        <span class="gc-icon">📦</span>
+                        <span>Amazon Pay</span>
                     </div>
-                    
-                    <div class="form-group">
-                        <label for="payout-amount">Amount (₹)</label>
-                        <input type="number" id="payout-amount" min="10" placeholder="Minimum ₹10" required>
+                    <div class="giftcard-option" data-brand="playstore" onclick="selectGiftCard('playstore', 'Google Play Store Redeem Code 🕹️')">
+                        <span class="gc-icon">🎯</span>
+                        <span>Play Store</span>
+                    </div>
+                    <div class="giftcard-option" data-brand="flipkart" onclick="selectGiftCard('flipkart', 'Flipkart Gift Card 🛍️')">
+                        <span class="gc-icon">⚡</span>
+                        <span>Flipkart</span>
+                    </div>
+                </div>
+
+                <!-- Dynamic Functional Payout Form Panel -->
+                <div class="dynamic-form-panel">
+                    <div class="form-title-badge" id="selected-card-title">
+                        📦 Amazon Gift Card 🛒
                     </div>
 
-                    <button type="submit" class="app-btn">Redeem Now</button>
-                </form>
+                    <form id="payout-form" onsubmit="handleGiftCardRedeem(event)">
+                        <!-- Enter your Email ID Input -->
+                        <div class="form-group">
+                            <label for="user-email">Enter your Email ID</label>
+                            <input type="email" id="user-email" placeholder="aapkaname@gmail.com" required>
+                        </div>
+                        
+                        <!-- Enter your Amount Input -->
+                        <div class="form-group">
+                            <label for="payout-amount">Enter your amount</label>
+                            <input type="number" id="payout-amount" min="10" placeholder="Minimum amount ₹10" required>
+                        </div>
+
+                        <button type="submit" class="app-btn">Confirm Redemption</button>
+                    </form>
+                </div>
+
             </div>
         </div>
 
     </div>
 
-    <!-- App Bottom Fixed Menu Navigation -->
+    <!-- App Bottom Fixed Menu Navigation (Left side Home, 2nd View Ads, 3rd Redeem) -->
     <nav class="bottom-nav">
         <div class="nav-item active" onclick="switchToTab('home', this)">
             <span class="nav-icon">🏠</span>
@@ -421,10 +481,11 @@
         </div>
     </nav>
 
-    <!-- App State and Processing Scripts -->
+    <!-- App Engine Logic Controls -->
     <script>
-        // LocalStorage Sync for Balance Persistence
+        // Sync & Persistent Vault Balance Architecture
         let walletBalance = parseFloat(localStorage.getItem('adsdekho_pk_bal')) || 0.00;
+        let selectedBrandName = "Amazon Gift Card 🛒"; // Default select initialization
         updateUIBalance();
 
         function updateUIBalance() {
@@ -432,7 +493,7 @@
             localStorage.setItem('adsdekho_pk_bal', walletBalance);
         }
 
-        // Tab Switching Router
+        // Modular Tab Swapper Router Engine
         function switchToTab(targetSection, menuElement) {
             document.querySelectorAll('.section').forEach(view => view.classList.remove('active'));
             document.querySelectorAll('.nav-item').forEach(btn => btn.classList.remove('active'));
@@ -441,54 +502,36 @@
             menuElement.classList.add('active');
         }
 
-        // Spin Engine Logic
-        let rotationDegrees = 0;
-        let isSpinning = false;
-
-        function startBrandedSpin() {
-            if (isSpinning) return;
+        // Real-Time Interlocking Card Selection Array Logic
+        function selectGiftCard(brandKey, fullTitle) {
+            // Remove active classes from options
+            document.querySelectorAll('.giftcard-option').forEach(opt => opt.classList.remove('active'));
             
-            isSpinning = true;
-            const actionBtn = document.getElementById('spin-button');
-            actionBtn.disabled = true;
-            actionBtn.innerText = "Spinning...";
-
-            const wheelElement = document.getElementById('wheel');
-            const randomSpin = Math.floor(Math.random() * 360) + 1440; // 4 full rounds minimum
-            rotationDegrees += randomSpin;
+            // Activate selected brand element box
+            document.querySelector(`.giftcard-option[data-brand="${brandKey}"]`).classList.add('active');
             
-            wheelElement.style.transform = `rotate(${rotationDegrees}deg)`;
-
-            setTimeout(() => {
-                const rewardsPool = [0.20, 0.50, 1.00, 0.00, 0.30];
-                const prize = rewardsPool[Math.floor(Math.random() * rewardsPool.length)];
-                
-                walletBalance += prize;
-                updateUIBalance();
-
-                if (prize > 0) {
-                    alert(`🎉 AdsDekho PaiseKamao Bonus!\n\nAapke wallet me ₹${prize.toFixed(2)} jod diye gaye hain.`);
-                } else {
-                    alert("Oh ho! Agli baar try karein.");
-                }
-
-                actionBtn.disabled = false;
-                actionBtn.innerText = "Spin Now";
-                isSpinning = false;
-            }, 3100);
+            // Dynamic Label & State Assignment Update
+            document.getElementById('selected-card-title').innerHTML = fullTitle;
+            selectedBrandName = fullTitle;
         }
 
-        // Fake Ad Loader Video Stream Trigger
+        // Fake Video Ads Player Stream click integration handler
         function loadAdRewardStream() {
-            alert("AdsDekho Platform: Ad load ho raha hai, kripya 3-5 seconds wait karein...");
+            try {
+                window.open("https://www.highperformanceformat.com/b92a026cc433822f579cfe7965286307/invoke.js", "_blank");
+            } catch(e) {
+                console.log("Ad browser popup fallback execution triggered.");
+            }
+
+            alert("AdsDekho Engine: Verification system checking live scripts... Please wait 3 seconds.");
             setTimeout(() => {
                 walletBalance += 0.50;
                 updateUIBalance();
-                alert("✨ Badhai ho! Ad dekhne ke liye ₹0.50 aapke wallet me add ho chuke hain.");
+                alert("✨ Badhai ho! Dynamic reward successful! ₹0.50 credited into your system wallet.");
             }, 2500);
         }
 
-        // Gift Card Redeem Form Processor
+        // Comprehensive Validation Payout Array Processor
         function handleGiftCardRedeem(event) {
             event.preventDefault();
             
@@ -496,19 +539,20 @@
             const amountField = parseFloat(document.getElementById('payout-amount').value);
 
             if (amountField < 10) {
-                alert("AdsDekho Security: Minimum withdrawal limit ₹10 hai.");
+                alert("AdsDekho Guardrail: Transact Failed! Minimum withdrawal threshold criteria is ₹10.");
                 return;
             }
 
             if (walletBalance < amountField) {
-                alert(`Insufficient Balance! Aapke paas sirf ₹${walletBalance.toFixed(2)} hain.`);
+                alert(`Insufficient Funds! Aapke asset server pool me sirf ₹${walletBalance.toFixed(2)} available hain.`);
                 return;
             }
 
+            // Deduct transaction funds from client model active instance state
             walletBalance -= amountField;
             updateUIBalance();
             
-            alert(`✅ Redeem Request Received!\n\nEmail: ${emailField}\nAmount: ₹${amountField.toFixed(2)}\n\nAdsDekho team 24-48 ghante me aapko Gift Card code email par bhej degi.`);
+            alert(`✅ Redeem Token Created Successfully!\n\nSelected Voucher: ${selectedBrandName}\nRecipient ID: ${emailField}\nWithdraw Sum: ₹${amountField.toFixed(2)}\n\nAdsDekho team safely check karke next 24 hours ke andar voucher code aapki target email par dispatch kar degi.`);
             document.getElementById('payout-form').reset();
         }
     </script>
