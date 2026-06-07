@@ -5,57 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>AdsDekho PaiseKamao - Real Cash Rewards</title>
     
-    <style>
-        :root {
-            --bg-gradient: linear-gradient(135deg, #09070f 0%, #130f26 100%);
-            --card-bg: rgba(255, 255, 255, 0.05);
-            --card-border: rgba(255, 255, 255, 0.09);
-            --accent-green: #00ff66;
-            --accent-purple: #9d4edd;
-            --text-main: #ffffff;
-            --text-muted: #94a3b8;
-        }
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: sans-serif; }
-        body { background: var(--bg-gradient); color: var(--text-main); min-height: 100vh; padding-bottom: 90px; }
-        .app-container { padding: 20px; max-width: 480px; margin: 0 auto; }
-        .premium-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 22px; padding: 20px; margin-bottom: 20px; }
-        .app-btn { background: linear-gradient(135deg, #9d4edd 0%, #6a0dad 100%); color: white; border: none; padding: 14px; border-radius: 14px; width: 100%; cursor: pointer; margin-top: 10px; font-weight: 600; }
-        .telegram-btn { background: #229ed9; color: white; padding: 14px; border-radius: 14px; text-align: center; font-weight: bold; margin-bottom: 20px; display: block; text-decoration: none; }
-        .coming-soon-card { background: rgba(255, 255, 255, 0.01); border-left: 4px solid var(--text-muted); opacity: 0.55; margin-bottom: 20px; padding: 20px; border-radius: 22px; }
-        .premium-badge { background: rgba(255, 255, 255, 0.08); padding: 4px 10px; border-radius: 20px; font-size: 11px; }
-    </style>
-</head>
-<body>
-
-    <div class="app-container">
-        <div id="home" class="section active">
-            <a href="https://t.me/adsdekho" class="telegram-btn" target="_blank">Join Telegram Channel 🚀</a>
-            
-            <div class="premium-card">
-                <h3>Register for Tasks</h3>
-                <input type="email" id="user-email" placeholder="aapkaname@gmail.com" style="width:100%; padding:14px; background:rgba(255,255,255,0.04); border:1px solid var(--card-border); border-radius:12px; color:white; margin-top:10px;">
-                <button class="app-btn" onclick="registerUser()">Register</button>
-            </div>
-
-            <div class="premium-card"><h2>Welcome Back! 👋</h2></div>
-
-            <div class="coming-soon-card">
-                <h3>Lucky Spin Wheel 🎡</h3>
-                <span class="premium-badge">Coming Soon</span>
-            </div>
-
-            <div class="coming-soon-card">
-                <h3>Gk Quiz 🧠</h3>
-                <span class="premium-badge">Coming Soon</span>
-            </div>
-
-            <div class="coming-soon-card">
-                <h3>Math Quiz ➗</h3>
-                <span class="premium-badge">Coming Soon</span>
-            </div>
-        </div>
-    </div>
-
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
         import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
@@ -73,22 +22,74 @@
 
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
-        const analytics = getAnalytics(app);
+        getAnalytics(app);
 
         window.registerUser = async () => {
             const email = document.getElementById("user-email").value;
-            if(!email) { alert("Please enter your email"); return; }
-            try {
-                await addDoc(collection(db, "users"), {
-                    email: email,
-                    status: "pending",
-                    timestamp: new Date()
-                });
-                alert("Registration Successful! Admin jald hi approve karega.");
-            } catch (e) {
-                alert("Error: " + e.message);
-            }
+            if(!email) { alert("Please enter email"); return; }
+            await addDoc(collection(db, "users"), { email: email, status: "pending", timestamp: new Date() });
+            alert("Registration successful! Wait for approval.");
         };
     </script>
+
+    <style>
+        :root { --bg-gradient: linear-gradient(135deg, #09070f 0%, #130f26 100%); --card-bg: rgba(255, 255, 255, 0.05); --card-border: rgba(255, 255, 255, 0.09); --accent-green: #00ff66; --text-main: #ffffff; --text-muted: #94a3b8; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, sans-serif; }
+        body { background: var(--bg-gradient); color: var(--text-main); min-height: 100vh; padding-bottom: 90px; }
+        header { background: rgba(19, 15, 38, 0.85); padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--card-border); position: sticky; top: 0; z-index: 1000; }
+        .logo { font-size: 20px; font-weight: 900; background: linear-gradient(45deg, #00ff66, #00e5ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .wallet-box { background: rgba(0, 255, 102, 0.12); border: 1px solid rgba(0, 255, 102, 0.25); color: var(--accent-green); padding: 6px 14px; border-radius: 20px; font-weight: 700; }
+        .app-container { padding: 20px; max-width: 480px; margin: 0 auto; }
+        .section { display: none; } .section.active { display: block; }
+        .premium-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 22px; padding: 20px; margin-bottom: 20px; }
+        .app-btn { background: linear-gradient(135deg, #9d4edd 0%, #6a0dad 100%); color: white; border: none; padding: 14px; width: 100%; border-radius: 14px; cursor: pointer; margin-top: 10px; }
+        .telegram-btn { background: #229ed9; color: white; padding: 14px; border-radius: 14px; text-align: center; font-weight: bold; margin-bottom: 20px; display: block; text-decoration: none; }
+        .coming-soon-card { background: rgba(255, 255, 255, 0.01); border-left: 4px solid var(--text-muted); opacity: 0.55; padding: 20px; border-radius: 22px; margin-bottom: 20px; }
+        .bottom-nav { position: fixed; bottom: 0; width: 100%; background: #09070f; display: flex; justify-content: space-around; padding: 15px; border-top: 1px solid var(--card-border); }
+        .nav-item { color: var(--text-muted); cursor: pointer; text-align: center; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">AdsDekho <span>PaiseKamao</span></div>
+        <div class="wallet-box">🪙 ₹<span id="balance">0.00</span></div>
+    </header>
+
+    <div class="app-container">
+        <div id="home" class="section active">
+            <a href="https://t.me/adsdekho" class="telegram-btn" target="_blank">Join Telegram Channel 🚀</a>
+            <div class="premium-card">
+                <h3>Register Now</h3>
+                <input type="email" id="user-email" placeholder="aapkaname@gmail.com" style="width:100%; padding:14px; border-radius:12px; background:rgba(255,255,255,0.04); color:white; border:1px solid var(--card-border);">
+                <button class="app-btn" onclick="registerUser()">Register</button>
+            </div>
+            <div class="premium-card"><h2>Welcome Back! 👋</h2></div>
+            <div class="coming-soon-card"><h3>Lucky Spin Wheel 🎡</h3><span>Coming Soon</span></div>
+            <div class="coming-soon-card"><h3>Gk Quiz 🧠</h3><span>Coming Soon</span></div>
+            <div class="coming-soon-card"><h3>Math Quiz ➗</h3><span>Coming Soon</span></div>
+        </div>
+
+        <div id="view-ads" class="section">
+            <div class="premium-card">
+                <h2>Watch Premium Ads</h2>
+                <button class="app-btn" onclick="alert('Ad starting...')">Watch Video Ad</button>
+            </div>
+        </div>
+
+        <div id="redeem" class="section">
+            <div class="premium-card">
+                <h2>Redeem Gift Card 🎁</h2>
+                <input type="number" placeholder="Enter Amount" style="width:100%; padding:14px; margin-top:10px;">
+            </div>
+        </div>
+    </div>
+
+    <nav class="bottom-nav">
+        <div class="nav-item" onclick="document.querySelectorAll('.section').forEach(s=>s.style.display='none'); document.getElementById('home').style.display='block'">🏠 Home</div>
+        <div class="nav-item" onclick="document.querySelectorAll('.section').forEach(s=>s.style.display='none'); document.getElementById('view-ads').style.display='block'">📺 Ads</div>
+        <div class="nav-item" onclick="document.querySelectorAll('.section').forEach(s=>s.style.display='none'); document.getElementById('redeem').style.display='block'">🎁 Redeem</div>
+    </nav>
+
 </body>
 </html>
