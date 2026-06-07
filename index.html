@@ -8,49 +8,47 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
     
     <style>
-        :root { --bg-gradient: linear-gradient(135deg, #09070f 0%, #130f26 100%); --card-bg: rgba(255, 255, 255, 0.05); --card-border: rgba(255, 255, 255, 0.09); --accent-green: #00ff66; --text-main: #ffffff; --text-muted: #94a3b8; }
+        :root { --bg-gradient: #09070f; --card-bg: rgba(255, 255, 255, 0.05); --card-border: rgba(255, 255, 255, 0.15); --accent-green: #00ff66; --text-main: #ffffff; }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: sans-serif; }
         body { background: var(--bg-gradient); color: var(--text-main); min-height: 100vh; padding-bottom: 90px; }
-        header { padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--card-border); position: sticky; top: 0; background: rgba(19, 15, 38, 0.85); z-index: 1000; }
-        .logo { font-size: 20px; font-weight: 900; background: linear-gradient(45deg, #00ff66, #00e5ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .wallet-box { background: rgba(0, 255, 102, 0.12); color: var(--accent-green); padding: 6px 14px; border-radius: 20px; font-weight: 700; font-size: 14px; }
-        .app-container { padding: 20px; max-width: 480px; margin: 0 auto; }
+        header { padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--card-border); position: sticky; top: 0; background: #09070f; z-index: 1000; }
+        .logo { font-size: 18px; font-weight: 900; color: var(--accent-green); }
+        .wallet-box { background: rgba(0, 255, 102, 0.1); color: var(--accent-green); padding: 5px 12px; border-radius: 20px; font-weight: bold; }
+        .app-container { padding: 15px; max-width: 480px; margin: 0 auto; }
         .section { display: none; } .section.active { display: block; }
-        .premium-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 22px; padding: 20px; margin-bottom: 20px; }
-        .app-btn { background: linear-gradient(135deg, #9d4edd 0%, #6a0dad 100%); color: white; border: none; padding: 14px 20px; width: 100%; border-radius: 14px; cursor: pointer; margin-top: 15px; font-weight: 600; }
-        .coming-soon-card { opacity: 0.6; border-left: 4px solid var(--text-muted); }
-        .giftcard-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 15px; }
-        .giftcard-option { background: rgba(255, 255, 255, 0.05); border: 2px solid transparent; border-radius: 12px; padding: 10px; text-align: center; cursor: pointer; color: white; font-size: 11px; }
-        .giftcard-option.active { border-color: var(--accent-green); background: rgba(0, 255, 102, 0.1); }
-        #inapp-ad-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000000; z-index: 99999; flex-direction: column; align-items: center; padding-top: 90px; }
-        .ad-timer-badge { background: rgba(255, 0, 0, 0.15); border: 1px solid #ff3b30; padding: 10px 20px; border-radius: 30px; color: #ff5252; font-weight: 700; }
-        .ad-close-btn { display: none; background: var(--accent-green); color: #09070f; border: none; padding: 10px 22px; border-radius: 25px; font-weight: 800; cursor: pointer; }
-        .ad-viewport-body { width: 92%; height: calc(100vh - 180px); background: #0b0813; border: 1px solid var(--card-border); border-radius: 20px; }
-        .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(9, 7, 15, 0.92); display: flex; justify-content: space-around; padding: 12px 0; border-top: 1px solid var(--card-border); z-index: 1000; }
-        .nav-item { color: var(--text-muted); cursor: pointer; text-align: center; }
+        .premium-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 15px; padding: 15px; margin-bottom: 15px; }
+        .coming-soon-card { opacity: 0.7; border-left: 5px solid #555; }
+        .premium-badge { font-size: 10px; background: #333; padding: 2px 8px; border-radius: 10px; color: #aaa; }
+        .app-btn { background: #0088cc; color: white; border: none; padding: 12px; width: 100%; border-radius: 12px; font-weight: bold; margin-bottom: 15px; cursor: pointer; }
+        .giftcard-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 15px; }
+        .giftcard-option { background: #1a1a1a; padding: 10px; text-align: center; border-radius: 10px; border: 1px solid #333; cursor: pointer; font-size: 11px; }
+        .giftcard-option.active { border-color: var(--accent-green); background: #112211; }
+        .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: #111; display: flex; justify-content: space-around; padding: 12px 0; border-top: 1px solid #333; }
+        .nav-item { cursor: pointer; text-align: center; font-size: 12px; color: #888; }
         .nav-item.active { color: var(--accent-green); }
+        #inapp-ad-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 9999; flex-direction: column; align-items: center; justify-content: center; }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="logo">AdsDekho <span>PaiseKamao</span></div>
+        <div class="logo">AdsDekho PaiseKamao</div>
         <div class="wallet-box">🪙 ₹<span id="balance">0.00</span></div>
     </header>
 
     <div class="app-container">
         <div id="home" class="section active">
-            <button class="app-btn" onclick="claimTelegramBonus()" style="background: linear-gradient(135deg, #0088cc 0%, #006699 100%);">Join channel nd claim 4 ₹</button>
+            <button class="app-btn" onclick="claimTelegramBonus()">Join channel nd claim 4 ₹</button>
             <div class="premium-card"><h2>Welcome Back! 👋</h2></div>
-            <div class="premium-card coming-soon-card"><h3>Lucky Spin Wheel 🎡</h3></div>
-            <div class="premium-card coming-soon-card"><h3>GK Quiz 🧠</h3></div>
-            <div class="premium-card coming-soon-card"><h3>Math Quiz ➗</h3></div>
+            <div class="premium-card coming-soon-card"><h3>Lucky Spin Wheel 🎡 <span class="premium-badge">Coming Soon</span></h3></div>
+            <div class="premium-card coming-soon-card"><h3>GK Quiz 🧠 <span class="premium-badge">Coming Soon</span></h3></div>
+            <div class="premium-card coming-soon-card"><h3>Math Quiz ➗ <span class="premium-badge">Coming Soon</span></h3></div>
         </div>
 
         <div id="view-ads" class="section">
             <div class="premium-card">
                 <h2>Watch Premium Ads</h2>
-                <button class="app-btn" style="background: linear-gradient(135deg, #00ff66 0%, #00b0ff 100%); color:#000;" onclick="openInAppAdEngine()">Watch Video Ad (+ ₹0.50)</button>
+                <button class="app-btn" style="background:var(--accent-green); color:#000;" onclick="openInAppAdEngine()">Watch Video Ad (+ ₹0.50)</button>
             </div>
         </div>
 
@@ -63,26 +61,23 @@
                     <div class="giftcard-option" onclick="selectGift(this, 'Flipkart')">Flipkart</div>
                 </div>
                 <form id="payout-form" onsubmit="handleFirebaseRedeem(event)">
-                    <input type="email" id="user-email" placeholder="Email ID" required style="width:100%; padding:14px; background:rgba(255,255,255,0.04); border:1px solid #444; border-radius:12px; color:white;">
-                    <input type="number" id="payout-amount" placeholder="Amount (Min 10)" min="10" required style="width:100%; padding:14px; background:rgba(255,255,255,0.04); border:1px solid #444; border-radius:12px; color:white; margin-top:10px;">
-                    <button type="submit" class="app-btn">Confirm Redemption</button>
+                    <input type="email" id="user-email" placeholder="Email ID" required style="width:100%; padding:10px; background:#111; border:1px solid #333; border-radius:8px; color:white; margin-bottom:10px;">
+                    <input type="number" id="payout-amount" placeholder="Amount (Min 10)" min="10" required style="width:100%; padding:10px; background:#111; border:1px solid #333; border-radius:8px; color:white;">
+                    <button type="submit" class="app-btn" style="background:#444; margin-top:15px;">Confirm Redemption</button>
                 </form>
             </div>
         </div>
     </div>
 
     <div id="inapp-ad-modal">
-        <div style="position:absolute; top:20px; display:flex; gap:10px;">
-            <div class="ad-timer-badge" id="ad-timer-text">⏳ 30s</div>
-            <button class="ad-close-btn" id="ad-close-action" onclick="closeInAppAdEngine()">❌ Close</button>
-        </div>
-        <iframe class="ad-viewport-body" id="ad-target-frame"></iframe>
+        <iframe id="ad-target-frame" style="width:100%; height:80%; border:none;"></iframe>
+        <button id="close-ad" style="display:none; padding:10px 20px; margin-top:20px; background:red; color:white; border:none; border-radius:5px;" onclick="closeInAppAdEngine()">Close Ad</button>
     </div>
 
     <nav class="bottom-nav">
-        <div class="nav-item active" onclick="switchToTab('home', this)">🏠<span>Home</span></div>
-        <div class="nav-item" onclick="switchToTab('view-ads', this)">📺<span>Ads</span></div>
-        <div class="nav-item" onclick="switchToTab('redeem', this)">🎁<span>Redeem</span></div>
+        <div class="nav-item active" onclick="switchToTab('home', this)">🏠<br>Home</div>
+        <div class="nav-item" onclick="switchToTab('view-ads', this)">📺<br>Ads</div>
+        <div class="nav-item" onclick="switchToTab('redeem', this)">🎁<br>Redeem</div>
     </nav>
 
     <script>
@@ -90,7 +85,6 @@
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
         let selectedGift = "";
-
         let walletBalance = parseFloat(localStorage.getItem('adsdekho_pk_bal')) || 0.00;
         document.getElementById('balance').innerText = walletBalance.toFixed(2);
 
@@ -119,14 +113,8 @@
 
         function openInAppAdEngine() {
             document.getElementById('inapp-ad-modal').style.display = 'flex';
-            document.getElementById('ad-close-action').style.display = 'none';
             document.getElementById('ad-target-frame').src = "https://www.effectivecpmnetwork.com/m2ds8022zn?key=b7ed26fc3794ac80821ca064a92d5e76";
-            let timeLeft = 30;
-            const timer = setInterval(() => {
-                timeLeft--;
-                document.getElementById('ad-timer-text').innerText = `⏳ ${timeLeft}s`;
-                if (timeLeft <= 0) { clearInterval(timer); document.getElementById('ad-close-action').style.display = 'block'; }
-            }, 1000);
+            setTimeout(() => { document.getElementById('close-ad').style.display = 'block'; }, 30000);
         }
 
         function closeInAppAdEngine() {
@@ -139,15 +127,9 @@
 
         function handleFirebaseRedeem(event) {
             event.preventDefault();
-            if (!selectedGift) { alert("Please select a gift card first!"); return; }
-            const email = document.getElementById('user-email').value;
-            const amount = parseFloat(document.getElementById('payout-amount').value);
-            if (walletBalance < amount) { alert("Insufficient Balance!"); return; }
-            db.collection("redemption_requests").add({ email, amount, giftType: selectedGift, status: "Pending", timestamp: firebase.firestore.FieldValue.serverTimestamp() })
-            .then(() => {
-                walletBalance -= amount; localStorage.setItem('adsdekho_pk_bal', walletBalance);
-                document.getElementById('balance').innerText = walletBalance.toFixed(2);
-                alert("Request sent successfully for " + selectedGift + "!"); document.getElementById('payout-form').reset();
+            if (!selectedGift) { alert("Please select a gift card!"); return; }
+            db.collection("redemption_requests").add({ email: document.getElementById('user-email').value, amount: document.getElementById('payout-amount').value, gift: selectedGift }).then(() => {
+                alert("Request sent!");
             });
         }
     </script>
