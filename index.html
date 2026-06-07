@@ -3,21 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>AdsDekho PaiseKamao - Real Cash Rewards</title>
-    
+    <title>AdsDekho PaiseKamao</title>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
     
     <style>
-        :root {
-            --bg-gradient: linear-gradient(135deg, #09070f 0%, #130f26 100%);
-            --card-bg: rgba(255, 255, 255, 0.05);
-            --card-border: rgba(255, 255, 255, 0.09);
-            --accent-green: #00ff66;
-            --text-main: #ffffff;
-            --text-muted: #94a3b8;
-        }
-
+        :root { --bg-gradient: linear-gradient(135deg, #09070f 0%, #130f26 100%); --card-bg: rgba(255, 255, 255, 0.05); --card-border: rgba(255, 255, 255, 0.09); --accent-green: #00ff66; --text-main: #ffffff; --text-muted: #94a3b8; }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: sans-serif; }
         body { background: var(--bg-gradient); color: var(--text-main); min-height: 100vh; padding-bottom: 90px; }
         header { padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--card-border); position: sticky; top: 0; background: rgba(19, 15, 38, 0.85); z-index: 1000; }
@@ -28,12 +19,16 @@
         .premium-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 22px; padding: 20px; margin-bottom: 20px; }
         .app-btn { background: linear-gradient(135deg, #9d4edd 0%, #6a0dad 100%); color: white; border: none; padding: 14px 20px; width: 100%; border-radius: 14px; cursor: pointer; margin-top: 15px; font-weight: 600; }
         .app-btn.secondary { background: linear-gradient(135deg, #00ff66 0%, #00b0ff 100%); color: #09070f; font-weight: 700; }
-        .app-btn.telegram-btn { background: linear-gradient(135deg, #0088cc 0%, #006699 100%); margin-bottom: 20px; }
+        
+        /* Ad Modal Styles */
+        #inapp-ad-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000000; z-index: 99999; flex-direction: column; align-items: center; padding-top: 90px; }
+        .ad-modal-header { position: absolute; top: 20px; left: 20px; right: 20px; display: flex; justify-content: space-between; align-items: center; }
+        .ad-timer-badge { background: rgba(255, 0, 0, 0.15); border: 1px solid #ff3b30; padding: 10px 20px; border-radius: 30px; color: #ff5252; font-weight: 700; }
+        .ad-close-btn { display: none; background: var(--accent-green); color: #09070f; border: none; padding: 10px 22px; border-radius: 25px; font-weight: 800; cursor: pointer; }
+        .ad-viewport-body { width: 92%; height: calc(100vh - 180px); background: #0b0813; border: 1px solid var(--card-border); border-radius: 20px; }
         .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(9, 7, 15, 0.92); display: flex; justify-content: space-around; padding: 12px 0; border-top: 1px solid var(--card-border); z-index: 1000; }
         .nav-item { color: var(--text-muted); cursor: pointer; text-align: center; }
         .nav-item.active { color: var(--accent-green); }
-        #inapp-ad-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000000; z-index: 99999; flex-direction: column; align-items: center; padding-top: 90px; }
-        .ad-viewport-body { width: 92%; height: calc(100vh - 180px); background: #0b0813; border: 1px solid var(--card-border); border-radius: 20px; }
     </style>
 </head>
 <body>
@@ -45,11 +40,10 @@
 
     <div class="app-container">
         <div id="home" class="section active">
-            <button class="app-btn telegram-btn" onclick="claimTelegramBonus()">Join channel nd claim 4 ₹</button>
+            <button class="app-btn" onclick="claimTelegramBonus()" style="background: linear-gradient(135deg, #0088cc 0%, #006699 100%);">Join channel nd claim 4 ₹</button>
             <div class="premium-card"><h2>Welcome Back! 👋</h2></div>
-            <div class="premium-card"><h3>Lucky Spin Wheel 🎡</h3><span class="premium-badge">Coming Soon</span></div>
-            <div class="premium-card"><h3>GK Quiz 🧠</h3><span class="premium-badge">Coming Soon</span></div>
-            <div class="premium-card"><h3>Math Quiz ➗</h3><span class="premium-badge">Coming Soon</span></div>
+            <div class="premium-card"><h3>Lucky Spin Wheel 🎡</h3></div>
+            <div class="premium-card"><h3>GK Quiz 🧠</h3></div>
         </div>
 
         <div id="view-ads" class="section">
@@ -63,8 +57,8 @@
             <div class="premium-card">
                 <h2>Redeem Request</h2>
                 <form id="payout-form" onsubmit="handleFirebaseRedeem(event)">
-                    <div class="form-group"><input type="email" id="user-email" placeholder="Email ID" required style="width:100%; padding:14px; background:rgba(255,255,255,0.04); border:1px solid #444; border-radius:12px; color:white;"></div>
-                    <div class="form-group"><input type="number" id="payout-amount" placeholder="Amount (Min 10)" min="10" required style="width:100%; padding:14px; background:rgba(255,255,255,0.04); border:1px solid #444; border-radius:12px; color:white; margin-top:10px;"></div>
+                    <input type="email" id="user-email" placeholder="Email ID" required style="width:100%; padding:14px; background:rgba(255,255,255,0.04); border:1px solid #444; border-radius:12px; color:white;">
+                    <input type="number" id="payout-amount" placeholder="Amount" min="10" required style="width:100%; padding:14px; background:rgba(255,255,255,0.04); border:1px solid #444; border-radius:12px; color:white; margin-top:10px;">
                     <button type="submit" class="app-btn">Confirm Redemption</button>
                 </form>
             </div>
@@ -72,6 +66,10 @@
     </div>
 
     <div id="inapp-ad-modal">
+        <div class="ad-modal-header">
+            <div class="ad-timer-badge" id="ad-timer-text">⏳ 30s Remaining</div>
+            <button class="ad-close-btn" id="ad-close-action" onclick="closeInAppAdEngine()">❌ Close Ad</button>
+        </div>
         <iframe class="ad-viewport-body" id="ad-target-frame"></iframe>
     </div>
 
@@ -96,6 +94,34 @@
             el.classList.add('active');
         }
 
+        // Ads Engine Logic
+        function openInAppAdEngine() {
+            document.getElementById('inapp-ad-modal').style.display = 'flex';
+            document.getElementById('ad-close-action').style.display = 'none';
+            document.getElementById('ad-timer-text').style.display = 'block';
+            document.getElementById('ad-target-frame').src = "https://www.effectivecpmnetwork.com/m2ds8022zn?key=b7ed26fc3794ac80821ca064a92d5e76";
+            
+            let timeLeft = 30;
+            const timer = setInterval(() => {
+                timeLeft--;
+                document.getElementById('ad-timer-text').innerText = `⏳ ${timeLeft}s Remaining`;
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    document.getElementById('ad-timer-text').style.display = 'none';
+                    document.getElementById('ad-close-action').style.display = 'block';
+                }
+            }, 1000);
+        }
+
+        function closeInAppAdEngine() {
+            document.getElementById('inapp-ad-modal').style.display = 'none';
+            document.getElementById('ad-target-frame').src = "about:blank";
+            walletBalance += 0.50;
+            localStorage.setItem('adsdekho_pk_bal', walletBalance);
+            document.getElementById('balance').innerText = walletBalance.toFixed(2);
+            alert("Mubarak ho! ₹0.50 add ho gaye.");
+        }
+
         function claimTelegramBonus() {
             window.open("https://t.me/adsdekho", "_blank");
             if(localStorage.getItem('telegram_bonus_claimed')) { alert("Aap pehle hi bonus le chuke hain!"); return; }
@@ -104,20 +130,6 @@
             localStorage.setItem('telegram_bonus_claimed', 'true');
             document.getElementById('balance').innerText = walletBalance.toFixed(2);
             alert("✨ Mubarak ho! ₹4.00 add ho gaye.");
-        }
-
-        function openInAppAdEngine() {
-            document.getElementById('inapp-ad-modal').style.display = 'flex';
-            document.getElementById('ad-target-frame').src = "https://www.effectivecpmnetwork.com/m2ds8022zn?key=b7ed26fc3794ac80821ca064a92d5e76";
-            setTimeout(() => { closeInAppAdEngine(); }, 31000);
-        }
-
-        function closeInAppAdEngine() {
-            document.getElementById('inapp-ad-modal').style.display = 'none';
-            walletBalance += 0.50; 
-            localStorage.setItem('adsdekho_pk_bal', walletBalance);
-            document.getElementById('balance').innerText = walletBalance.toFixed(2);
-            alert("Mubarak ho! ₹0.50 add ho gaye.");
         }
 
         function handleFirebaseRedeem(event) {
