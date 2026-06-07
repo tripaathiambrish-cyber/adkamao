@@ -3,44 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AdsDekho Pese Kamao</title>
+    <title>AdsDekho Premium</title>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
     
     <style>
-        body { background: #0f0f0f; color: #fff; font-family: sans-serif; margin: 0; }
+        body { background: #0f0f0f; color: #fff; font-family: sans-serif; margin: 0; padding-bottom: 80px; }
         .tab-content { display: none; padding: 20px; }
         .active { display: block; }
-        .btn { background: #00ff66; padding: 15px; width: 100%; border: none; border-radius: 10px; margin-top: 10px; font-weight: bold; }
-        .nav { display: flex; justify-content: space-around; background: #1a1a1a; padding: 15px; position: fixed; bottom: 0; width: 100%; }
-        .card { background: #222; padding: 15px; border-radius: 15px; margin-bottom: 15px; }
+        .card { background: #1a1a1a; padding: 20px; border-radius: 20px; margin-bottom: 20px; text-align: center; border: 1px solid #333; }
+        .btn { background: #00ff66; padding: 15px; width: 100%; border: none; border-radius: 50px; font-weight: bold; cursor: pointer; color: #000; }
+        .nav { display: flex; justify-content: space-around; background: #000; padding: 15px; position: fixed; bottom: 0; width: 100%; border-top: 1px solid #333; }
+        
+        /* Spin Wheel Style */
+        .wheel-box { width: 250px; height: 250px; border-radius: 50%; border: 10px solid #222; margin: 20px auto; position: relative; overflow: hidden; background: conic-gradient(red 0 72deg, #00ff66 72deg 144deg, yellow 144deg 216deg, blue 216deg 288deg, purple 288deg 360deg); transition: transform 4s cubic-bezier(0.17, 0.67, 0.12, 0.99); }
     </style>
 </head>
 <body>
 
     <div id="home" class="tab-content active">
         <h2>Dashboard</h2>
-        <div class="card"><h3>Balance: ₹<span id="balance">0</span></h3></div>
-        <p>Welcome, start earning by watching ads!</p>
+        <div class="card"><h3>Total Balance: ₹<span id="balance">0.00</span></h3></div>
+        <div class="card">
+            <h3>Lucky Spin 🎡</h3>
+            <div id="wheel" class="wheel-box"></div>
+            <button class="btn" onclick="spinWheel()">SPIN FOR MONEY</button>
+        </div>
     </div>
 
     <div id="ads" class="tab-content">
-        <h2>Watch Ads</h2>
-        <div class="card" onclick="watchAd()">
-            <p>Click to Watch Ad & Earn ₹2</p>
-            <button class="btn">WATCH AD</button>
+        <h2>View Ads</h2>
+        <div class="card">
+            <p>Har ad par milenge ₹2</p>
+            <button class="btn" onclick="watchAd()">WATCH AD</button>
         </div>
     </div>
 
     <div id="redeem" class="tab-content">
         <h2>Redeem Rewards</h2>
-        <select id="giftType" style="width:100%; padding:10px; margin-bottom:10px;">
-            <option>Amazon Gift Card</option>
-            <option>Play Store Redeem Code</option>
-            <option>Flipkart Gift Card</option>
-        </select>
-        <input type="email" id="email" placeholder="Email" style="width:90%; padding:10px; margin-bottom:10px;">
-        <button class="btn" style="background:#ff9900;" onclick="submitRedeem()">Submit Request</button>
+        <div class="card">
+            <select id="giftType" style="width:100%; padding:10px; margin-bottom:10px; border-radius:8px;">
+                <option>Amazon Gift Card</option>
+                <option>Play Store Redeem Code</option>
+                <option>Flipkart Gift Card</option>
+            </select>
+            <input type="email" id="email" placeholder="Enter your email" style="width:90%; padding:10px; margin-bottom:10px; border-radius:8px;">
+            <button class="btn" style="background:#ff9900;" onclick="submitRedeem()">REDEEM NOW</button>
+        </div>
     </div>
 
     <div class="nav">
@@ -50,32 +59,60 @@
     </div>
 
     <script>
-        const firebaseConfig = { /* Yahan apni wahi purani keys daalna */ };
+        const firebaseConfig = {
+            apiKey: "AIzaSyA7CCx2yrZK3HfGTlawBI8RiP70bMm55Z4",
+            authDomain: "adsdekho-pese-kamao.firebaseapp.com",
+            projectId: "adsdekho-pese-kamao",
+            storageBucket: "adsdekho-pese-kamao.firebasestorage.app",
+            messagingSenderId: "1041347482830",
+            appId: "1:1041347482830:web:4cb835e22749aaeeb46c9f"
+        };
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
 
         let bal = parseFloat(localStorage.getItem('bal')) || 0;
-        document.getElementById('balance').innerText = bal;
+        document.getElementById('balance').innerText = bal.toFixed(2);
 
         function showTab(id) {
             document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
             document.getElementById(id).classList.add('active');
         }
 
+        function spinWheel() {
+            const wheel = document.getElementById('wheel');
+            let rotation = Math.floor(Math.random() * 3600) + 360;
+            wheel.style.transform = `rotate(${rotation}deg)`;
+            setTimeout(() => {
+                let reward = Math.floor(Math.random() * 10) + 1;
+                bal += reward;
+                updateBalance();
+                alert("Wheel stopped! You won ₹" + reward);
+            }, 4000);
+        }
+
         function watchAd() {
             bal += 2;
-            localStorage.setItem('bal', bal);
-            document.getElementById('balance').innerText = bal;
+            updateBalance();
             alert("Ad watched! ₹2 added.");
         }
 
         function submitRedeem() {
+            if(bal <= 0) { alert("Balance kam hai!"); return; }
             db.collection("redemption_requests").add({
                 email: document.getElementById('email').value,
                 gift: document.getElementById('giftType').value,
                 amount: bal,
                 status: "Pending"
-            }).then(() => alert("Request sent successfully!"));
+            }).then(() => {
+                bal = 0;
+                updateBalance();
+                alert("Request sent! Admin verify karega.");
+            });
+        }
+
+        function updateBalance() {
+            localStorage.setItem('bal', bal);
+            document.getElementById('balance').innerText = bal.toFixed(2);
         }
     </script>
 </body>
