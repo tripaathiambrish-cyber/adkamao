@@ -2,142 +2,80 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>AdsDekho PaiseKamao</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AdsDekho Pese Kamao</title>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
     
     <style>
-        :root { --bg-gradient: linear-gradient(135deg, #09070f 0%, #130f26 100%); --card-bg: rgba(255, 255, 255, 0.05); --card-border: rgba(255, 255, 255, 0.09); --accent-green: #00ff66; --text-main: #ffffff; }
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: sans-serif; }
-        body { background: var(--bg-gradient); color: var(--text-main); min-height: 100vh; padding-bottom: 90px; }
-        header { padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--card-border); position: sticky; top: 0; background: rgba(19, 15, 38, 0.85); z-index: 1000; }
-        .logo { font-size: 18px; font-weight: 900; background: linear-gradient(45deg, #00ff66, #00e5ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .wallet-box { background: rgba(0, 255, 102, 0.12); color: var(--accent-green); padding: 6px 14px; border-radius: 20px; font-weight: 700; }
-        .app-container { padding: 15px; max-width: 480px; margin: 0 auto; }
-        .section { display: none; } .section.active { display: block; }
-        .premium-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 20px; padding: 15px; margin-bottom: 15px; text-align: center; }
-        .app-btn { background: linear-gradient(135deg, #9d4edd 0%, #6a0dad 100%); color: white; border: none; padding: 12px; width: 100%; border-radius: 12px; cursor: pointer; margin-top: 10px; font-weight: 600; }
-        
-        /* Spin Wheel */
-        .wheel-container { width: 150px; height: 150px; margin: 15px auto; border-radius: 50%; border: 8px solid #fff; background: conic-gradient(red 0deg 72deg, green 72deg 144deg, yellow 144deg 216deg, blue 216deg 288deg, purple 288deg 360deg); transition: transform 4s cubic-bezier(0.17, 0.67, 0.12, 0.99); }
-        
-        .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(9, 7, 15, 0.95); display: flex; justify-content: space-around; padding: 12px 0; border-top: 1px solid var(--card-border); z-index: 1000; }
-        .nav-item { color: #94a3b8; cursor: pointer; text-align: center; font-size: 12px; }
-        .nav-item.active { color: var(--accent-green); }
-        #inapp-ad-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 9999; flex-direction: column; align-items: center; padding-top: 50px; }
+        body { background: #0f0f0f; color: #fff; font-family: sans-serif; margin: 0; }
+        .tab-content { display: none; padding: 20px; }
+        .active { display: block; }
+        .btn { background: #00ff66; padding: 15px; width: 100%; border: none; border-radius: 10px; margin-top: 10px; font-weight: bold; }
+        .nav { display: flex; justify-content: space-around; background: #1a1a1a; padding: 15px; position: fixed; bottom: 0; width: 100%; }
+        .card { background: #222; padding: 15px; border-radius: 15px; margin-bottom: 15px; }
     </style>
 </head>
 <body>
 
-    <header>
-        <div class="logo">AdsDekho</div>
-        <div class="wallet-box">🪙 ₹<span id="balance">0.00</span></div>
-    </header>
+    <div id="home" class="tab-content active">
+        <h2>Dashboard</h2>
+        <div class="card"><h3>Balance: ₹<span id="balance">0</span></h3></div>
+        <p>Welcome, start earning by watching ads!</p>
+    </div>
 
-    <div class="app-container">
-        <div id="home" class="section active">
-            <button class="app-btn" onclick="claimTelegramBonus()" style="background: #0088cc;">Join & Claim 4 ₹</button>
-            <div class="premium-card">
-                <h3>Lucky Spin Wheel 🎡</h3>
-                <div id="wheel" class="wheel-container"></div>
-                <button class="app-btn" style="background:var(--accent-green); color:#000;" onclick="startSpin()">SPIN NOW</button>
-            </div>
-            <div class="premium-card"><h3>GK Quiz 🧠</h3><button class="app-btn">Play Now</button></div>
-            <div class="premium-card"><h3>Math Quiz ➗</h3><button class="app-btn">Play Now</button></div>
-        </div>
-
-        <div id="view-ads" class="section">
-            <div class="premium-card">
-                <h2>Watch Ads</h2>
-                <button class="app-btn" onclick="openInAdEngine()">Watch Video Ad (+ ₹0.50)</button>
-            </div>
-        </div>
-
-        <div id="redeem" class="section">
-            <div class="premium-card">
-                <h2>Redeem Gift Card</h2>
-                <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:5px; margin-bottom:10px;">
-                    <div style="background:#222; padding:8px; border-radius:5px;" onclick="selectGift('Amazon')">Amazon</div>
-                    <div style="background:#222; padding:8px; border-radius:5px;" onclick="selectGift('PlayStore')">PlayStore</div>
-                    <div style="background:#222; padding:8px; border-radius:5px;" onclick="selectGift('Flipkart')">Flipkart</div>
-                </div>
-                <form id="payout-form" onsubmit="handleFirebaseRedeem(event)">
-                    <input type="email" id="user-email" placeholder="Email" required style="width:100%; padding:10px; margin-bottom:10px; border-radius:8px; border:none;">
-                    <input type="number" id="payout-amount" placeholder="Amount" min="10" required style="width:100%; padding:10px; border-radius:8px; border:none;">
-                    <button type="submit" class="app-btn">Confirm Redeem</button>
-                </form>
-            </div>
+    <div id="ads" class="tab-content">
+        <h2>Watch Ads</h2>
+        <div class="card" onclick="watchAd()">
+            <p>Click to Watch Ad & Earn ₹2</p>
+            <button class="btn">WATCH AD</button>
         </div>
     </div>
 
-    <div id="inapp-ad-modal">
-        <iframe id="ad-target-frame" style="width:90%; height:70%; border:none;"></iframe>
-        <button id="close-ad" style="display:none; padding:15px; background:red; border:none; color:white; margin-top:10px;" onclick="closeInAdEngine()">Close Ad</button>
+    <div id="redeem" class="tab-content">
+        <h2>Redeem Rewards</h2>
+        <select id="giftType" style="width:100%; padding:10px; margin-bottom:10px;">
+            <option>Amazon Gift Card</option>
+            <option>Play Store Redeem Code</option>
+            <option>Flipkart Gift Card</option>
+        </select>
+        <input type="email" id="email" placeholder="Email" style="width:90%; padding:10px; margin-bottom:10px;">
+        <button class="btn" style="background:#ff9900;" onclick="submitRedeem()">Submit Request</button>
     </div>
 
-    <nav class="bottom-nav">
-        <div class="nav-item active" onclick="switchToTab('home', this)">🏠<br>Home</div>
-        <div class="nav-item" onclick="switchToTab('view-ads', this)">📺<br>Ads</div>
-        <div class="nav-item" onclick="switchToTab('redeem', this)">🎁<br>Redeem</div>
-    </nav>
+    <div class="nav">
+        <button onclick="showTab('home')">Home</button>
+        <button onclick="showTab('ads')">Ads</button>
+        <button onclick="showTab('redeem')">Redeem</button>
+    </div>
 
     <script>
-        const firebaseConfig = { apiKey: "AIzaSyA7CCx2yrZK3HfGTlawBI8RiP70bMm55Z4", authDomain: "adsdekho-pese-kamao.firebaseapp.com", projectId: "adsdekho-pese-kamao", storageBucket: "adsdekho-pese-kamao.firebasestorage.app", messagingSenderId: "1041347482830", appId: "1:1041347482830:web:4cb835e22749aaeeb46c9f" };
+        const firebaseConfig = { /* Yahan apni wahi purani keys daalna */ };
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
-        let selectedGift = "";
-        let walletBalance = parseFloat(localStorage.getItem('adsdekho_pk_bal')) || 0.00;
-        document.getElementById('balance').innerText = walletBalance.toFixed(2);
 
-        function switchToTab(id, el) {
-            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+        let bal = parseFloat(localStorage.getItem('bal')) || 0;
+        document.getElementById('balance').innerText = bal;
+
+        function showTab(id) {
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
             document.getElementById(id).classList.add('active');
-            el.classList.add('active');
         }
 
-        function startSpin() {
-            const wheel = document.getElementById('wheel');
-            const deg = Math.floor(Math.random() * 360) + 1440;
-            wheel.style.transform = `rotate(${deg}deg)`;
-            setTimeout(() => {
-                const prizes = [1, 2, 0.5, 8, -5];
-                const prize = prizes[Math.floor(Math.random() * prizes.length)];
-                walletBalance += prize;
-                localStorage.setItem('adsdekho_pk_bal', walletBalance);
-                document.getElementById('balance').innerText = walletBalance.toFixed(2);
-                alert("Mubarak! Aapko mile: ₹" + prize);
-            }, 4000);
+        function watchAd() {
+            bal += 2;
+            localStorage.setItem('bal', bal);
+            document.getElementById('balance').innerText = bal;
+            alert("Ad watched! ₹2 added.");
         }
 
-        function selectGift(g) { selectedGift = g; alert("Selected: " + g); }
-
-        function openInAdEngine() {
-            document.getElementById('inapp-ad-modal').style.display = 'flex';
-            document.getElementById('ad-target-frame').src = "https://www.effectivecpmnetwork.com/m2ds8022zn?key=b7ed26fc3794ac80821ca064a92d5e76";
-            setTimeout(() => { document.getElementById('close-ad').style.display = 'block'; }, 10000);
-        }
-
-        function closeInAdEngine() {
-            document.getElementById('inapp-ad-modal').style.display = 'none';
-            walletBalance += 0.50;
-            localStorage.setItem('adsdekho_pk_bal', walletBalance);
-            document.getElementById('balance').innerText = walletBalance.toFixed(2);
-        }
-
-        function claimTelegramBonus() {
-            if(localStorage.getItem('telegram_bonus_claimed')) { alert("Aap pehle hi claim kar chuke hain!"); return; }
-            walletBalance += 4.00;
-            localStorage.setItem('adsdekho_pk_bal', walletBalance);
-            localStorage.setItem('telegram_bonus_claimed', 'true');
-            document.getElementById('balance').innerText = walletBalance.toFixed(2);
-            window.open("https://t.me/adsdekho", "_blank");
-        }
-
-        function handleFirebaseRedeem(e) {
-            e.preventDefault();
-            db.collection("redemption_requests").add({ email: document.getElementById('user-email').value, amount: document.getElementById('payout-amount').value, gift: selectedGift }).then(() => alert("Request sent!"));
+        function submitRedeem() {
+            db.collection("redemption_requests").add({
+                email: document.getElementById('email').value,
+                gift: document.getElementById('giftType').value,
+                amount: bal,
+                status: "Pending"
+            }).then(() => alert("Request sent successfully!"));
         }
     </script>
 </body>
