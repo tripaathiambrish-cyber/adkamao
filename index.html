@@ -8,20 +8,23 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
     
     <style>
-        :root { --bg-gradient: linear-gradient(135deg, #09070f 0%, #130f26 100%); --card-bg: rgba(255, 255, 255, 0.05); --card-border: rgba(255, 255, 255, 0.09); --accent-green: #00ff66; --text-main: #ffffff; --text-muted: #94a3b8; }
+        :root { --bg-gradient: linear-gradient(135deg, #09070f 0%, #130f26 100%); --card-bg: rgba(255, 255, 255, 0.05); --card-border: rgba(255, 255, 255, 0.09); --accent-green: #00ff66; --text-main: #ffffff; }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: sans-serif; }
         body { background: var(--bg-gradient); color: var(--text-main); min-height: 100vh; padding-bottom: 90px; }
         header { padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--card-border); position: sticky; top: 0; background: rgba(19, 15, 38, 0.85); z-index: 1000; }
         .logo { font-size: 20px; font-weight: 900; background: linear-gradient(45deg, #00ff66, #00e5ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .wallet-box { background: rgba(0, 255, 102, 0.12); color: var(--accent-green); padding: 6px 14px; border-radius: 20px; font-weight: 700; font-size: 14px; }
+        .wallet-box { background: rgba(0, 255, 102, 0.12); color: var(--accent-green); padding: 6px 14px; border-radius: 20px; font-weight: 700; }
         .app-container { padding: 20px; max-width: 480px; margin: 0 auto; }
         .section { display: none; } .section.active { display: block; }
         .premium-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 22px; padding: 20px; margin-bottom: 20px; text-align: center; }
-        .app-btn { background: linear-gradient(135deg, #9d4edd 0%, #6a0dad 100%); color: white; border: none; padding: 14px 20px; width: 100%; border-radius: 14px; cursor: pointer; margin-top: 15px; font-weight: 600; }
-        /* Spin Wheel */
-        #wheel { width: 150px; height: 150px; border-radius: 50%; border: 8px solid #333; margin: 15px auto; display: flex; align-items: center; justify-content: center; transition: transform 4s cubic-bezier(0.17, 0.67, 0.12, 0.99); background: conic-gradient(#ff0000 0deg 72deg, #00ff00 72deg 144deg, #ffff00 144deg 216deg, #0000ff 216deg 288deg, #ff00ff 288deg 360deg); color: #000; font-weight: bold; }
+        .app-btn { background: linear-gradient(135deg, #9d4edd 0%, #6a0dad 100%); color: white; border: none; padding: 12px 18px; width: 100%; border-radius: 14px; cursor: pointer; margin-top: 10px; font-weight: 600; }
+        
+        #wheel { width: 150px; height: 150px; border-radius: 50%; border: 8px solid #333; margin: 15px auto; display: flex; align-items: center; justify-content: center; background: conic-gradient(red 0deg 72deg, green 72deg 144deg, yellow 144deg 216deg, blue 216deg 288deg, purple 288deg 360deg); }
+        .spinning { animation: rotateWheel 4s cubic-bezier(0.17, 0.67, 0.12, 0.99) forwards; }
+        @keyframes rotateWheel { from { transform: rotate(0deg); } to { transform: rotate(1800deg); } }
+        
         .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(9, 7, 15, 0.92); display: flex; justify-content: space-around; padding: 12px 0; border-top: 1px solid var(--card-border); z-index: 1000; }
-        .nav-item { color: var(--text-muted); cursor: pointer; text-align: center; }
+        .nav-item { color: #94a3b8; cursor: pointer; text-align: center; }
         .nav-item.active { color: var(--accent-green); }
     </style>
 </head>
@@ -34,30 +37,34 @@
 
     <div class="app-container">
         <div id="home" class="section active">
-            <button class="app-btn" onclick="claimTelegramBonus()" style="background: linear-gradient(135deg, #0088cc 0%, #006699 100%);">Join channel nd claim 4 ₹</button>
-            
+            <button class="app-btn" onclick="claimTelegramBonus()" style="background: #0088cc;">Join channel & claim 4 ₹</button>
             <div class="premium-card">
                 <h3>Lucky Spin Wheel 🎡</h3>
                 <div id="wheel">SPIN</div>
-                <button class="app-btn" onclick="spinWheel()">SPIN NOW</button>
+                <button class="app-btn" style="background:var(--accent-green); color:#000;" onclick="startSpin()">SPIN NOW</button>
             </div>
-            
-            <div class="premium-card"><h3>GK Quiz 🧠 <span style="font-size:10px; color:#aaa;">Coming Soon</span></h3></div>
-            <div class="premium-card"><h3>Math Quiz ➗ <span style="font-size:10px; color:#aaa;">Coming Soon</span></h3></div>
+            <div class="premium-card"><h3>GK Quiz 🧠</h3><button class="app-btn" onclick="alert('GK Quiz Starting!')">Play Now</button></div>
+            <div class="premium-card"><h3>Math Quiz ➗</h3><button class="app-btn" onclick="alert('Math Quiz Starting!')">Play Now</button></div>
         </div>
 
         <div id="view-ads" class="section">
             <div class="premium-card">
-                <h2>Watch Premium Ads</h2>
-                <button class="app-btn" style="background:var(--accent-green); color:#000;" onclick="openInAppAdEngine()">Watch Video Ad (+ ₹0.50)</button>
+                <h2>Watch Ads</h2>
+                <button class="app-btn" onclick="openInAdEngine()">Watch Video Ad (+ ₹0.50)</button>
             </div>
         </div>
 
         <div id="redeem" class="section">
             <div class="premium-card">
                 <h2>Redeem Gift Card</h2>
+                <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:5px; margin-bottom:10px;">
+                    <div style="background:#222; padding:5px; border-radius:5px;" onclick="selectGift('Amazon')">Amazon</div>
+                    <div style="background:#222; padding:5px; border-radius:5px;" onclick="selectGift('PlayStore')">PlayStore</div>
+                    <div style="background:#222; padding:5px; border-radius:5px;" onclick="selectGift('Flipkart')">Flipkart</div>
+                </div>
                 <form id="payout-form" onsubmit="handleFirebaseRedeem(event)">
-                    <input type="email" id="user-email" placeholder="Email ID" required style="width:100%; padding:10px; background:#111; border:1px solid #333; border-radius:8px; color:white; margin-bottom:10px;">
+                    <input type="email" id="user-email" placeholder="Email" required style="width:100%; padding:10px; margin-bottom:10px;">
+                    <input type="number" id="payout-amount" placeholder="Amount" min="10" required style="width:100%; padding:10px;">
                     <button type="submit" class="app-btn">Confirm Redemption</button>
                 </form>
             </div>
@@ -74,6 +81,7 @@
         const firebaseConfig = { apiKey: "AIzaSyA7CCx2yrZK3HfGTlawBI8RiP70bMm55Z4", authDomain: "adsdekho-pese-kamao.firebaseapp.com", projectId: "adsdekho-pese-kamao", storageBucket: "adsdekho-pese-kamao.firebasestorage.app", messagingSenderId: "1041347482830", appId: "1:1041347482830:web:4cb835e22749aaeeb46c9f" };
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
+        let selectedGift = "";
         let walletBalance = parseFloat(localStorage.getItem('adsdekho_pk_bal')) || 0.00;
         document.getElementById('balance').innerText = walletBalance.toFixed(2);
 
@@ -84,12 +92,15 @@
             el.classList.add('active');
         }
 
-        function spinWheel() {
+        function selectGift(g) { selectedGift = g; alert("Selected: " + g); }
+
+        function startSpin() {
             const wheel = document.getElementById('wheel');
-            const prizes = [1, 2, 0.50, 8, -5];
-            const randomDegree = Math.floor(Math.random() * 360) + 1440;
-            wheel.style.transform = `rotate(${randomDegree}deg)`;
+            wheel.classList.remove('spinning');
+            void wheel.offsetWidth;
+            wheel.classList.add('spinning');
             setTimeout(() => {
+                const prizes = [1, 2, 0.50, 8, -5];
                 const prize = prizes[Math.floor(Math.random() * prizes.length)];
                 walletBalance += prize;
                 localStorage.setItem('adsdekho_pk_bal', walletBalance);
@@ -105,6 +116,11 @@
             localStorage.setItem('telegram_bonus_claimed', 'true');
             document.getElementById('balance').innerText = walletBalance.toFixed(2);
             window.open("https://t.me/adsdekho", "_blank");
+        }
+        
+        function handleFirebaseRedeem(e) {
+            e.preventDefault();
+            db.collection("redemption_requests").add({ email: document.getElementById('user-email').value, amount: document.getElementById('payout-amount').value, gift: selectedGift }).then(() => alert("Request sent!"));
         }
     </script>
 </body>
