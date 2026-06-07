@@ -3,152 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AdsDekho Premium</title>
-    
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
-    <script src="https://pl29653945.effectivecpmnetwork.com/46/85/fa/4685fafb5472ddac3cd72b2b389c7bc4.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
+    <title>Under Maintenance</title>
     <style>
-        :root { --main-bg: #050212; --card-bg: #16162d; --accent: #ff9900; --purple: #673ab7; }
-        body { background: var(--main-bg); color: #fff; font-family: sans-serif; margin: 0; padding-bottom: 80px; }
-        header { padding: 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #333; }
-        .bal-badge { background: #222; padding: 6px 15px; border-radius: 20px; border: 1px solid var(--accent); color: var(--accent); font-weight: bold; }
-        .tab-content { display: none; padding: 20px; }
-        .active { display: block; }
-        .card { background: var(--card-bg); padding: 20px; border-radius: 20px; margin-bottom: 20px; text-align: center; border: 1px solid #333; }
-        .btn { background: linear-gradient(90deg, var(--purple), #9c27b0); color: #fff; padding: 15px; width: 100%; border: none; border-radius: 15px; font-weight: bold; cursor: pointer; margin-top: 10px; }
-        
-        .wheel-container { position: relative; width: 300px; height: 300px; margin: 30px auto; }
-        #wheel { width: 100%; height: 100%; border-radius: 50%; border: 8px solid #222; position: relative; overflow: hidden; transition: transform 5s cubic-bezier(0.1, 0, 0.1, 1); }
-        .segment { position: absolute; width: 50%; height: 50%; transform-origin: 100% 100%; display: flex; align-items: center; justify-content: center; font-weight: bold; color: #fff; }
-        .s1 { background: #f44336; transform: rotate(0deg) skewY(-45deg); }
-        .s2 { background: #9c27b0; transform: rotate(45deg) skewY(-45deg); }
-        .s3 { background: #3f51b5; transform: rotate(90deg) skewY(-45deg); }
-        .s4 { background: #2196f3; transform: rotate(135deg) skewY(-45deg); }
-        .s5 { background: #009688; transform: rotate(180deg) skewY(-45deg); }
-        .s6 { background: #4caf50; transform: rotate(225deg) skewY(-45deg); }
-        .s7 { background: #ffeb3b; transform: rotate(270deg) skewY(-45deg); color: #000; }
-        .s8 { background: #ff9800; transform: rotate(315deg) skewY(-45deg); }
-        .label { transform: skewY(45deg) rotate(22.5deg); font-size: 18px; }
-
-        .nav { display: flex; justify-content: space-around; background: #000; padding: 15px; position: fixed; bottom: 0; width: 100%; border-top: 1px solid #333; }
-        .nav button { background: none; border: none; color: #666; cursor: pointer; }
-        .active-nav { color: var(--accent); }
+        body { 
+            background: #0f0f0f; 
+            color: #fff; 
+            font-family: sans-serif; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            height: 100vh; 
+            margin: 0; 
+            text-align: center;
+        }
+        .container { padding: 20px; }
+        h1 { color: #ff9900; }
+        p { color: #888; }
+        .spinner { 
+            border: 4px solid #333; 
+            border-top: 4px solid #ff9900; 
+            border-radius: 50%; 
+            width: 50px; 
+            height: 50px; 
+            animation: spin 1s linear infinite; 
+            margin: 20px auto; 
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
-
-    <header>
-        <div>AdsDekho</div>
-        <div class="bal-badge">🪙 ₹<span id="balance">0.00</span></div>
-    </header>
-
-    <div id="home" class="tab-content active">
-        <div class="card">
-            <h3>Lucky Spin 🎡</h3>
-            <div class="wheel-container">
-                <div id="wheel">
-                    <div class="segment s1"><div class="label">₹1</div></div>
-                    <div class="segment s2"><div class="label">₹5</div></div>
-                    <div class="segment s3"><div class="label">₹0.5</div></div>
-                    <div class="segment s4"><div class="label">₹10</div></div>
-                    <div class="segment s5"><div class="label">₹2</div></div>
-                    <div class="segment s6"><div class="label">-9</div></div>
-                    <div class="segment s7"><div class="label">₹20</div></div>
-                    <div class="segment s8"><div class="label">₹1</div></div>
-                </div>
-            </div>
-            <button class="btn" onclick="spinWheel()">SPIN NOW</button>
-        </div>
-        <div class="card">
-            <a href="https://t.me/YOUR_LINK"><button class="btn" style="background:#0088cc;">JOIN TELEGRAM</button></a>
-        </div>
-        <div style="text-align:center;">
-            <script>atOptions={'key':'b92a026cc433822f579cfe7965286307','format':'iframe','height':60,'width':468,'params':{}};</script>
-            <script src="https://www.highperformanceformat.com/b92a026cc433822f579cfe7965286307/invoke.js"></script>
-        </div>
+    <div class="container">
+        <div class="spinner"></div>
+        <h1>Website Under Maintenance</h1>
+        <p>Hum apni services ko behtar bana rahe hain.<br>Kuch der mein vapas aayenge!</p>
     </div>
-
-    <div id="ads" class="tab-content">
-        <div class="card">
-            <h3>Watch & Earn</h3>
-            <script>atOptions={'key':'df54788aa24c0780ac4cda38795bd285','format':'iframe','height':300,'width':160,'params':{}};</script>
-            <script src="https://www.highperformanceformat.com/df54788aa24c0780ac4cda38795bd285/invoke.js"></script>
-            <button class="btn" onclick="watchAd()">WATCH AD</button>
-        </div>
-    </div>
-
-    <div id="redeem" class="tab-content">
-        <div class="card">
-            <h3>Redeem Rewards</h3>
-            <input type="email" id="email" placeholder="Email ID" style="width:90%; padding:10px; margin-bottom:10px;">
-            <input type="number" id="redeemAmount" placeholder="Amount (Min 10)" style="width:90%; padding:10px; margin-bottom:10px;">
-            <button class="btn" style="background:var(--accent);" onclick="submitRedeem()">REDEEM NOW</button>
-        </div>
-    </div>
-
-    <div class="nav">
-        <button onclick="showTab('home', this)" class="active-nav"><i class="fas fa-home"></i><br>Home</button>
-        <button onclick="showTab('ads', this)"><i class="fas fa-play"></i><br>Ads</button>
-        <button onclick="showTab('redeem', this)"><i class="fas fa-gift"></i><br>Redeem</button>
-    </div>
-
-    <script>
-        const firebaseConfig = { apiKey: "AIzaSyA7CCx2yrZK3HfGTlawBI8RiP70bMm55Z4", authDomain: "adsdekho-pese-kamao.firebaseapp.com", projectId: "adsdekho-pese-kamao", storageBucket: "adsdekho-pese-kamao.firebasestorage.app", messagingSenderId: "1041347482830", appId: "1:1041347482830:web:4cb835e22749aaeeb46c9f" };
-        firebase.initializeApp(firebaseConfig);
-        const db = firebase.firestore();
-
-        let bal = parseFloat(localStorage.getItem('bal')) || 0;
-        document.getElementById('balance').innerText = bal.toFixed(2);
-
-        function showTab(id, btn) {
-            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
-            document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active-nav'));
-            btn.classList.add('active-nav');
-        }
-
-        function spinWheel() {
-            const wheel = document.getElementById('wheel');
-            const rewards = [1, 5, 0.5, 10, 2, -9, 20, 1];
-            let deg = 3600 + Math.floor(Math.random() * 360);
-            wheel.style.transform = `rotate(${deg}deg)`;
-            setTimeout(() => {
-                let won = rewards[Math.floor((deg % 360) / 45)];
-                bal += won;
-                if(bal < 0) bal = 0;
-                updateUI();
-                alert("Spin Result: ₹" + won);
-            }, 5000);
-        }
-
-        function watchAd() {
-            alert("Ad chal rahi hai...");
-            setTimeout(() => {
-                bal += 0.50;
-                updateUI();
-                alert("₹0.50 add ho gaye!");
-            }, 3000);
-        }
-
-        function submitRedeem() {
-            let amount = parseFloat(document.getElementById('redeemAmount').value);
-            if(bal >= amount && amount >= 10) {
-                db.collection("redemption_requests").add({ email: document.getElementById('email').value, amount: amount, status: "Pending" });
-                bal -= amount;
-                updateUI();
-                alert("Request success!");
-            } else {
-                alert("Error: Minimum ₹10 ya Balance kam hai.");
-            }
-        }
-
-        function updateUI() {
-            localStorage.setItem('bal', bal);
-            document.getElementById('balance').innerText = bal.toFixed(2);
-        }
-    </script>
 </body>
 </html>
