@@ -18,8 +18,9 @@
         .section { display: none; } .section.active { display: block; }
         .premium-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 22px; padding: 20px; margin-bottom: 20px; }
         .app-btn { background: linear-gradient(135deg, #9d4edd 0%, #6a0dad 100%); color: white; border: none; padding: 14px 20px; width: 100%; border-radius: 14px; cursor: pointer; margin-top: 15px; font-weight: 600; }
+        .coming-soon-card { opacity: 0.6; border-left: 4px solid var(--text-muted); }
         .giftcard-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 15px; }
-        .giftcard-option { background: rgba(255, 255, 255, 0.05); border: 2px solid transparent; border-radius: 12px; padding: 10px; text-align: center; cursor: pointer; color: white; font-size: 12px; }
+        .giftcard-option { background: rgba(255, 255, 255, 0.05); border: 2px solid transparent; border-radius: 12px; padding: 10px; text-align: center; cursor: pointer; color: white; font-size: 11px; }
         .giftcard-option.active { border-color: var(--accent-green); background: rgba(0, 255, 102, 0.1); }
         #inapp-ad-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000000; z-index: 99999; flex-direction: column; align-items: center; padding-top: 90px; }
         .ad-timer-badge { background: rgba(255, 0, 0, 0.15); border: 1px solid #ff3b30; padding: 10px 20px; border-radius: 30px; color: #ff5252; font-weight: 700; }
@@ -41,7 +42,9 @@
         <div id="home" class="section active">
             <button class="app-btn" onclick="claimTelegramBonus()" style="background: linear-gradient(135deg, #0088cc 0%, #006699 100%);">Join channel nd claim 4 ₹</button>
             <div class="premium-card"><h2>Welcome Back! 👋</h2></div>
-            <div class="premium-card"><h3>Lucky Spin Wheel 🎡</h3></div>
+            <div class="premium-card coming-soon-card"><h3>Lucky Spin Wheel 🎡</h3></div>
+            <div class="premium-card coming-soon-card"><h3>GK Quiz 🧠</h3></div>
+            <div class="premium-card coming-soon-card"><h3>Math Quiz ➗</h3></div>
         </div>
 
         <div id="view-ads" class="section">
@@ -69,7 +72,7 @@
     </div>
 
     <div id="inapp-ad-modal">
-        <div class="ad-modal-header" style="position:absolute; top:20px; display:flex; gap:10px;">
+        <div style="position:absolute; top:20px; display:flex; gap:10px;">
             <div class="ad-timer-badge" id="ad-timer-text">⏳ 30s</div>
             <button class="ad-close-btn" id="ad-close-action" onclick="closeInAppAdEngine()">❌ Close</button>
         </div>
