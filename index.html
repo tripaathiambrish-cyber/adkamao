@@ -12,39 +12,39 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: sans-serif; }
         body { background: var(--bg-gradient); color: var(--text-main); min-height: 100vh; padding-bottom: 90px; }
         header { padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--card-border); position: sticky; top: 0; background: rgba(19, 15, 38, 0.85); z-index: 1000; }
-        .logo { font-size: 20px; font-weight: 900; background: linear-gradient(45deg, #00ff66, #00e5ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .logo { font-size: 18px; font-weight: 900; background: linear-gradient(45deg, #00ff66, #00e5ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .wallet-box { background: rgba(0, 255, 102, 0.12); color: var(--accent-green); padding: 6px 14px; border-radius: 20px; font-weight: 700; }
-        .app-container { padding: 20px; max-width: 480px; margin: 0 auto; }
+        .app-container { padding: 15px; max-width: 480px; margin: 0 auto; }
         .section { display: none; } .section.active { display: block; }
-        .premium-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 22px; padding: 20px; margin-bottom: 20px; text-align: center; }
-        .app-btn { background: linear-gradient(135deg, #9d4edd 0%, #6a0dad 100%); color: white; border: none; padding: 12px 18px; width: 100%; border-radius: 14px; cursor: pointer; margin-top: 10px; font-weight: 600; }
+        .premium-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 20px; padding: 15px; margin-bottom: 15px; text-align: center; }
+        .app-btn { background: linear-gradient(135deg, #9d4edd 0%, #6a0dad 100%); color: white; border: none; padding: 12px; width: 100%; border-radius: 12px; cursor: pointer; margin-top: 10px; font-weight: 600; }
         
-        #wheel { width: 150px; height: 150px; border-radius: 50%; border: 8px solid #333; margin: 15px auto; display: flex; align-items: center; justify-content: center; background: conic-gradient(red 0deg 72deg, green 72deg 144deg, yellow 144deg 216deg, blue 216deg 288deg, purple 288deg 360deg); }
-        .spinning { animation: rotateWheel 4s cubic-bezier(0.17, 0.67, 0.12, 0.99) forwards; }
-        @keyframes rotateWheel { from { transform: rotate(0deg); } to { transform: rotate(1800deg); } }
+        /* Spin Wheel */
+        .wheel-container { width: 150px; height: 150px; margin: 15px auto; border-radius: 50%; border: 8px solid #fff; background: conic-gradient(red 0deg 72deg, green 72deg 144deg, yellow 144deg 216deg, blue 216deg 288deg, purple 288deg 360deg); transition: transform 4s cubic-bezier(0.17, 0.67, 0.12, 0.99); }
         
-        .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(9, 7, 15, 0.92); display: flex; justify-content: space-around; padding: 12px 0; border-top: 1px solid var(--card-border); z-index: 1000; }
-        .nav-item { color: #94a3b8; cursor: pointer; text-align: center; }
+        .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(9, 7, 15, 0.95); display: flex; justify-content: space-around; padding: 12px 0; border-top: 1px solid var(--card-border); z-index: 1000; }
+        .nav-item { color: #94a3b8; cursor: pointer; text-align: center; font-size: 12px; }
         .nav-item.active { color: var(--accent-green); }
+        #inapp-ad-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 9999; flex-direction: column; align-items: center; padding-top: 50px; }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="logo">AdsDekho PaiseKamao</div>
+        <div class="logo">AdsDekho</div>
         <div class="wallet-box">🪙 ₹<span id="balance">0.00</span></div>
     </header>
 
     <div class="app-container">
         <div id="home" class="section active">
-            <button class="app-btn" onclick="claimTelegramBonus()" style="background: #0088cc;">Join channel & claim 4 ₹</button>
+            <button class="app-btn" onclick="claimTelegramBonus()" style="background: #0088cc;">Join & Claim 4 ₹</button>
             <div class="premium-card">
                 <h3>Lucky Spin Wheel 🎡</h3>
-                <div id="wheel">SPIN</div>
+                <div id="wheel" class="wheel-container"></div>
                 <button class="app-btn" style="background:var(--accent-green); color:#000;" onclick="startSpin()">SPIN NOW</button>
             </div>
-            <div class="premium-card"><h3>GK Quiz 🧠</h3><button class="app-btn" onclick="alert('GK Quiz Starting!')">Play Now</button></div>
-            <div class="premium-card"><h3>Math Quiz ➗</h3><button class="app-btn" onclick="alert('Math Quiz Starting!')">Play Now</button></div>
+            <div class="premium-card"><h3>GK Quiz 🧠</h3><button class="app-btn">Play Now</button></div>
+            <div class="premium-card"><h3>Math Quiz ➗</h3><button class="app-btn">Play Now</button></div>
         </div>
 
         <div id="view-ads" class="section">
@@ -58,17 +58,22 @@
             <div class="premium-card">
                 <h2>Redeem Gift Card</h2>
                 <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:5px; margin-bottom:10px;">
-                    <div style="background:#222; padding:5px; border-radius:5px;" onclick="selectGift('Amazon')">Amazon</div>
-                    <div style="background:#222; padding:5px; border-radius:5px;" onclick="selectGift('PlayStore')">PlayStore</div>
-                    <div style="background:#222; padding:5px; border-radius:5px;" onclick="selectGift('Flipkart')">Flipkart</div>
+                    <div style="background:#222; padding:8px; border-radius:5px;" onclick="selectGift('Amazon')">Amazon</div>
+                    <div style="background:#222; padding:8px; border-radius:5px;" onclick="selectGift('PlayStore')">PlayStore</div>
+                    <div style="background:#222; padding:8px; border-radius:5px;" onclick="selectGift('Flipkart')">Flipkart</div>
                 </div>
                 <form id="payout-form" onsubmit="handleFirebaseRedeem(event)">
-                    <input type="email" id="user-email" placeholder="Email" required style="width:100%; padding:10px; margin-bottom:10px;">
-                    <input type="number" id="payout-amount" placeholder="Amount" min="10" required style="width:100%; padding:10px;">
-                    <button type="submit" class="app-btn">Confirm Redemption</button>
+                    <input type="email" id="user-email" placeholder="Email" required style="width:100%; padding:10px; margin-bottom:10px; border-radius:8px; border:none;">
+                    <input type="number" id="payout-amount" placeholder="Amount" min="10" required style="width:100%; padding:10px; border-radius:8px; border:none;">
+                    <button type="submit" class="app-btn">Confirm Redeem</button>
                 </form>
             </div>
         </div>
+    </div>
+
+    <div id="inapp-ad-modal">
+        <iframe id="ad-target-frame" style="width:90%; height:70%; border:none;"></iframe>
+        <button id="close-ad" style="display:none; padding:15px; background:red; border:none; color:white; margin-top:10px;" onclick="closeInAdEngine()">Close Ad</button>
     </div>
 
     <nav class="bottom-nav">
@@ -92,32 +97,44 @@
             el.classList.add('active');
         }
 
-        function selectGift(g) { selectedGift = g; alert("Selected: " + g); }
-
         function startSpin() {
             const wheel = document.getElementById('wheel');
-            wheel.classList.remove('spinning');
-            void wheel.offsetWidth;
-            wheel.classList.add('spinning');
+            const deg = Math.floor(Math.random() * 360) + 1440;
+            wheel.style.transform = `rotate(${deg}deg)`;
             setTimeout(() => {
-                const prizes = [1, 2, 0.50, 8, -5];
+                const prizes = [1, 2, 0.5, 8, -5];
                 const prize = prizes[Math.floor(Math.random() * prizes.length)];
                 walletBalance += prize;
                 localStorage.setItem('adsdekho_pk_bal', walletBalance);
                 document.getElementById('balance').innerText = walletBalance.toFixed(2);
-                alert("Spin Result: ₹" + prize);
+                alert("Mubarak! Aapko mile: ₹" + prize);
             }, 4000);
         }
 
+        function selectGift(g) { selectedGift = g; alert("Selected: " + g); }
+
+        function openInAdEngine() {
+            document.getElementById('inapp-ad-modal').style.display = 'flex';
+            document.getElementById('ad-target-frame').src = "https://www.effectivecpmnetwork.com/m2ds8022zn?key=b7ed26fc3794ac80821ca064a92d5e76";
+            setTimeout(() => { document.getElementById('close-ad').style.display = 'block'; }, 10000);
+        }
+
+        function closeInAdEngine() {
+            document.getElementById('inapp-ad-modal').style.display = 'none';
+            walletBalance += 0.50;
+            localStorage.setItem('adsdekho_pk_bal', walletBalance);
+            document.getElementById('balance').innerText = walletBalance.toFixed(2);
+        }
+
         function claimTelegramBonus() {
-            if(localStorage.getItem('telegram_bonus_claimed')) { alert("Already claimed!"); return; }
+            if(localStorage.getItem('telegram_bonus_claimed')) { alert("Aap pehle hi claim kar chuke hain!"); return; }
             walletBalance += 4.00;
             localStorage.setItem('adsdekho_pk_bal', walletBalance);
             localStorage.setItem('telegram_bonus_claimed', 'true');
             document.getElementById('balance').innerText = walletBalance.toFixed(2);
             window.open("https://t.me/adsdekho", "_blank");
         }
-        
+
         function handleFirebaseRedeem(e) {
             e.preventDefault();
             db.collection("redemption_requests").add({ email: document.getElementById('user-email').value, amount: document.getElementById('payout-amount').value, gift: selectedGift }).then(() => alert("Request sent!"));
