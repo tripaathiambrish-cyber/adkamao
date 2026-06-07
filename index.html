@@ -8,98 +8,119 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
         import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
-        import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-analytics.js";
-
+        
         const firebaseConfig = {
           apiKey: "AIzaSyA7CCx2yrZK3HfGTlawBI8RiP70bMm55Z4",
           authDomain: "adsdekho-pese-kamao.firebaseapp.com",
+          databaseURL: "https://adsdekho-pese-kamao-default-rtdb.asia-southeast1.firebasedatabase.app",
           projectId: "adsdekho-pese-kamao",
           storageBucket: "adsdekho-pese-kamao.firebasestorage.app",
           messagingSenderId: "1041347482830",
           appId: "1:1041347482830:web:4cb835e22749aaeeb46c9f",
           measurementId: "G-78H1943NKH"
         };
-
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
-        getAnalytics(app);
 
         window.registerUser = async () => {
-            const email = document.getElementById("user-email").value;
-            if(!email) { alert("Please enter email"); return; }
-            await addDoc(collection(db, "users"), { email: email, status: "pending", timestamp: new Date() });
-            alert("Registration successful! Wait for approval.");
+            const email = document.getElementById("register-email").value;
+            if(!email) { alert("Please enter your email"); return; }
+            await addDoc(collection(db, "users"), { email: email, status: "pending", time: new Date() });
+            alert("Registration successful! Admin will approve soon.");
         };
     </script>
 
     <style>
-        /* (Yahan tumhara original CSS hai) */
-        :root { --bg-gradient: linear-gradient(135deg, #09070f 0%, #130f26 100%); --card-bg: rgba(255, 255, 255, 0.05); --card-border: rgba(255, 255, 255, 0.09); --accent-green: #00ff66; --text-main: #ffffff; --text-muted: #94a3b8; }
-        body { background: var(--bg-gradient); color: var(--text-main); min-height: 100vh; padding-bottom: 90px; }
+        /* [Purana CSS waisa ka waisa hai] */
+        :root { --bg-gradient: linear-gradient(135deg, #09070f 0%, #130f26 100%); --card-bg: rgba(255, 255, 255, 0.05); --card-border: rgba(255, 255, 255, 0.09); --accent-green: #00ff66; --accent-purple: #9d4edd; --text-main: #ffffff; --text-muted: #94a3b8; --amazon-color: #ff9900; --playstore-color: #3bccff; --flipkart-color: #2874f0; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; -webkit-tap-highlight-color: transparent; }
+        body { background: var(--bg-gradient); color: var(--text-main); min-height: 100vh; padding-bottom: 90px; overflow-x: hidden; }
+        header { background: rgba(19, 15, 38, 0.85); backdrop-filter: blur(12px); padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--card-border); position: sticky; top: 0; z-index: 1000; }
+        .logo { font-size: 20px; font-weight: 900; background: linear-gradient(45deg, #00ff66, #00e5ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .wallet-box { background: rgba(0, 255, 102, 0.12); border: 1px solid rgba(0, 255, 102, 0.25); color: var(--accent-green); padding: 6px 14px; border-radius: 20px; font-weight: 700; font-size: 14px; display: flex; align-items: center; gap: 6px; }
         .app-container { padding: 20px; max-width: 480px; margin: 0 auto; }
         .section { display: none; } .section.active { display: block; }
         .premium-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 22px; padding: 20px; margin-bottom: 20px; }
-        .app-btn { background: linear-gradient(135deg, #9d4edd 0%, #6a0dad 100%); color: white; border: none; padding: 14px; width: 100%; border-radius: 14px; cursor: pointer; margin-top: 10px; }
-        .telegram-btn { background: #229ed9; color: white; padding: 14px; border-radius: 14px; text-align: center; font-weight: bold; margin-bottom: 20px; display: block; text-decoration: none; }
+        .app-btn { background: linear-gradient(135deg, #9d4edd 0%, #6a0dad 100%); color: white; border: none; padding: 14px 20px; font-size: 15px; font-weight: 600; border-radius: 14px; cursor: pointer; width: 100%; margin-top: 15px; }
+        .app-btn.secondary { background: linear-gradient(135deg, #00ff66 0%, #00b0ff 100%); color: #09070f; font-weight: 700; }
+        .coming-soon-card { background: rgba(255, 255, 255, 0.01); border-left: 4px solid var(--text-muted); opacity: 0.55; }
+        .premium-badge { background: rgba(255, 255, 255, 0.08); color: var(--text-muted); padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; display: inline-block; margin-top: 8px; }
         .giftcard-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 15px 0; }
-        .giftcard-option { background: rgba(255, 255, 255, 0.03); border: 1px solid var(--card-border); border-radius: 14px; padding: 12px 6px; text-align: center; cursor: pointer; }
+        .giftcard-option { background: rgba(255, 255, 255, 0.03); border: 1px solid var(--card-border); border-radius: 14px; padding: 12px 6px; text-align: center; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 6px; }
         .giftcard-option.active { border-color: var(--accent-green); background: rgba(0, 255, 102, 0.12); }
-        .bottom-nav { position: fixed; bottom: 0; width: 100%; left: 0; background: rgba(9, 7, 15, 0.92); display: flex; justify-content: space-around; padding: 15px; border-top: 1px solid var(--card-border); }
-        .nav-item { color: var(--text-muted); cursor: pointer; text-align: center; font-size: 12px; }
+        .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(9, 7, 15, 0.92); display: flex; justify-content: space-around; padding: 12px 0; border-top: 1px solid var(--card-border); z-index: 1000; }
+        .nav-item { display: flex; flex-direction: column; align-items: center; color: var(--text-muted); cursor: pointer; font-size: 12px; }
         .nav-item.active { color: var(--accent-green); }
-        #inapp-ad-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 9999; }
+        #inapp-ad-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 99999; flex-direction: column; padding-top: 90px; }
+        /* Telegram Button Style */
+        .tele-btn { display: block; background: #229ed9; color: white; padding: 15px; border-radius: 14px; text-align: center; font-weight: bold; margin-bottom: 20px; text-decoration: none; }
     </style>
 </head>
 <body>
 
+    <header>
+        <div class="logo">AdsDekho <span>PaiseKamao</span></div>
+        <div class="wallet-box"><span>🪙</span>₹<span id="balance">0.00</span></div>
+    </header>
+
     <div class="app-container">
         <div id="home" class="section active">
-            <a href="https://t.me/adsdekho" class="telegram-btn">Join Telegram Channel 🚀</a>
+            <a href="https://t.me/adsdekho" class="tele-btn">Join Telegram Channel 🚀</a>
             <div class="premium-card">
-                <h3>Register</h3>
-                <input type="email" id="user-email" placeholder="Email" style="width:100%; padding:10px; border-radius:10px;">
+                <h3>Register Now</h3>
+                <input type="email" id="register-email" placeholder="Enter Email" style="width:100%; padding:14px; background:rgba(255,255,255,0.04); border:1px solid var(--card-border); border-radius:12px; color:white; margin-top:10px;">
                 <button class="app-btn" onclick="registerUser()">Register</button>
             </div>
-            <div class="premium-card"><h2>Welcome Back!</h2></div>
+            
+            <div class="premium-card"><h2>Welcome Back! 👋</h2><p>Tasks poore kijiye aur apna wallet balance instant badhaiye.</p></div>
+            <div class="premium-card coming-soon-card"><h3>Lucky Spin Wheel 🎡</h3><span class="premium-badge">Coming Soon</span></div>
+            <div class="premium-card coming-soon-card"><h3>Gk Quiz 🧠</h3><span class="premium-badge">Coming Soon</span></div>
+            <div class="premium-card coming-soon-card"><h3>Math Quiz ➗</h3><span class="premium-badge">Coming Soon</span></div>
         </div>
 
         <div id="view-ads" class="section">
             <div class="premium-card">
                 <h2>Watch Premium Ads</h2>
-                <button class="app-btn" onclick="openInAppAdEngine()">Watch Video Ad</button>
+                <button class="app-btn secondary" onclick="openInAppAdEngine()">Watch Video Ad (+ ₹0.50)</button>
             </div>
         </div>
 
         <div id="redeem" class="section">
             <div class="premium-card">
-                <h2>Redeem Gift Card</h2>
+                <h2>Redeem Gift Card 🎁</h2>
                 <div class="giftcard-grid">
-                    <div class="giftcard-option" onclick="alert('Amazon Selected')">📦 Amazon</div>
-                    <div class="giftcard-option" onclick="alert('PlayStore Selected')">🎯 PlayStore</div>
-                    <div class="giftcard-option" onclick="alert('Flipkart Selected')">⚡ Flipkart</div>
+                    <div class="giftcard-option active" data-brand="amazon"><span>📦 Amazon</span></div>
+                    <div class="giftcard-option" data-brand="playstore"><span>🎯 PlayStore</span></div>
+                    <div class="giftcard-option" data-brand="flipkart"><span>⚡ Flipkart</span></div>
                 </div>
             </div>
         </div>
     </div>
 
     <nav class="bottom-nav">
-        <div class="nav-item active" onclick="showSection('home', this)">🏠 Home</div>
-        <div class="nav-item" onclick="showSection('view-ads', this)">📺 Ads</div>
-        <div class="nav-item" onclick="showSection('redeem', this)">🎁 Redeem</div>
+        <div class="nav-item active" onclick="switchToTab('home', this)"><span>🏠</span>Home</div>
+        <div class="nav-item" onclick="switchToTab('view-ads', this)"><span>📺</span>Ads</div>
+        <div class="nav-item" onclick="switchToTab('redeem', this)"><span>🎁</span>Redeem</div>
     </nav>
 
-    <div id="inapp-ad-modal"><iframe id="ad-target-frame" style="width:100%; height:100%;"></iframe></div>
+    <div id="inapp-ad-modal">
+        <button onclick="closeAd()" style="position:absolute; top:20px; right:20px; background:red; color:white; padding:10px;">Close</button>
+        <iframe id="ad-target-frame" style="width:100%; height:90%;" src="about:blank"></iframe>
+    </div>
 
     <script>
-        function showSection(id, btn) {
-            document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
+        function switchToTab(id, el) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
             document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-            document.getElementById(id).style.display = 'block';
-            btn.classList.add('active');
+            document.getElementById(id).classList.add('active');
+            el.classList.add('active');
         }
         function openInAppAdEngine() {
-            document.getElementById('inapp-ad-modal').style.display = 'block';
+            document.getElementById('inapp-ad-modal').style.display = 'flex';
             document.getElementById('ad-target-frame').src = "https://www.effectivecpmnetwork.com/m2ds8022zn?key=b7ed26fc3794ac80821ca064a92d5e76";
+        }
+        function closeAd() {
+            document.getElementById('inapp-ad-modal').style.display = 'none';
         }
     </script>
 </body>
